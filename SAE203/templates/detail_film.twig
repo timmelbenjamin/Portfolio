@@ -1,0 +1,39 @@
+{% extends 'base.twig' %}
+
+{% block main %}
+<article class="normal">
+{%for film in tableau_films%}
+<div class="image-container">
+<img src="{{ film.affiche }}" alt="{{ film.nom_film }}">
+</div>
+<div class="info-container">
+<h2>{{ film.nom_film }}</h2>
+<p>Réalisateur : {{ film.realisateur }}</p>
+<p>Thème : {{ film.theme }}</p>
+<p>Année : {{ film.annee }}</p>
+<p>Synopsis : {{film.synopsis}}</p>
+<p><a href="films_par_realisateurs.php?id={{film.id_realisateur}}">Lien vers les autres films du realisateur</a></p>
+<p><a href="films_par_themes.php?id={{fresque.id_theme}}">Lien vers les autres film du même thème</a></p>
+
+<form method="post" action="reception_commentaire.php" class="comment-form">
+<input type="hidden" name="id_film" value="{{ id }}"> 
+<input type="text" name="nom" value="Anonyme" placeholder="Nom">
+<input type="text" name="comm" value="" placeholder="Saisir un commentaire">
+<input type="submit" value="Envoyer">
+</form>
+<div class="comment-list">
+{% if tableau_commentaires is not empty %}
+    {% for comment in tableau_commentaires %}
+        <div class="comment">
+            <p>{{ comment.nom }}</p>
+            <p>{{ comment.commentaire }}</p>
+        </div>
+    {% endfor %}
+{% else %}
+    <p>Aucun commentaire pour le moment.</p>
+{% endif %} 
+</div>
+</div>
+</article>
+{% endfor%}
+{% endblock %}

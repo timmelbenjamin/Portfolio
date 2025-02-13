@@ -1,0 +1,23 @@
+{% extends 'realisateurs.twig' %}
+
+{% block main %}
+<aside>
+<ul>
+    {% for realisateurs in tableau_realisateurs %}
+    <li><a href="films_par_realisateurs.php?id={{ realisateurs.id }}">{{ realisateurs.nom }} ({{realisateurs.film_count}})</a></li>
+    {% endfor %}
+</ul>
+</aside>
+<section class="container">
+<div class="right">
+    <div><a href="films_par_realisateurs.php?id={{ id }}"><i class="bi bi-grid"></i></a></div>
+    <div><a href="films_par_realisateurs_liste.php?id={{ id }}"><i class="bi bi-list"></i></a></div>
+</div>
+{% for film in tableau_films %}
+<article class="block miniature film-item">
+    <img src="{{ film.affiche }}" alt="{{ film.nom_film }}">
+    <p><a href="detail.php?id={{film.id}}">{{ film.nom_film }}</a></p>
+</article>
+{% endfor %}
+</section>
+{% endblock %}

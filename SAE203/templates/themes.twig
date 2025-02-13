@@ -1,0 +1,15 @@
+{% extends 'base.twig' %}
+
+{% block main %}
+<aside>
+    <ul>
+        {% for theme in tableau_themes %}
+        <li><a href="films_par_themes.php?id={{ theme.id }}">{{ theme.nom }} ({{theme.film_count}})</a></li>
+        {% endfor %}
+    </ul>
+</aside>
+
+<section class="container">
+<p>Sélectionnez un thème dans la liste de gauche</p>
+</section>
+{% endblock %}

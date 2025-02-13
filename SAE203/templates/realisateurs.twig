@@ -1,0 +1,13 @@
+{% extends 'base.twig' %}
+{% block main %}
+<aside>
+<ul>
+    {% for realisateurs in tableau_realisateurs %}
+    <li><a href="films_par_realisateurs.php?id={{ realisateurs.id }}">{{ realisateurs.nom }} ({{ realisateurs.film_count}})</a></li>
+    {% endfor %}
+</ul>
+</aside>
+<section class="container">
+<p>Sélectionnez une réalisateur dans la liste de gauche</p>
+</section>
+{% endblock %}

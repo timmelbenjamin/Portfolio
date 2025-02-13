@@ -1,0 +1,23 @@
+{% extends 'base.twig' %}
+
+{% block main %}
+<section class="container">
+<div class="right">
+    <div><a href="films_all.php"><i class="bi bi-grid"></i></a></div>
+    <div><a href="films_all_liste.php"><i class="bi bi-list"></i></a></div>
+</div>
+{% for film in tableau_films %}
+<div class="liste">
+    <div>
+        <a href="detail.php?id={{film.id}}"><img src="{{ film.affiche }}" alt="{{ film.nom_film }}"></a>
+    </div>
+    <article class="colonne">
+        <p>{{ film.nom_film }} de {{ film.realisateur }}</p>
+        <p>{{ film.theme }} {{ film.annee }}</p>
+        <p class="margin_off">Résumé :</p>
+        <p class="margin_off">{{film.synopsis}}</p>
+    </article>
+</div>
+{% endfor %}
+</section>
+{% endblock %}

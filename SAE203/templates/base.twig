@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CinémAvis</title>
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+</head>
+
+<body>
+<header>
+	<h1>CinémAvis</h1>
+</header>
+<nav>
+	<a href="index.php">Accueil</a> 
+	<a href="themes.php">Les thèmes</a> 
+	<a href="realisateurs.php">Les réalisateurs</a> 
+	<a href="annees.php">Les années</a> 
+	<a href="films_all.php">Tous les films</a>
+</nav>
+<main>
+	{% block main %}
+	<div class="accueil">
+		<h2>Bienvenue sur CinémAvis, le site où vous pouvez donner votre avis sur les films. Ce site est purement informatif et n'a aucune volonté commerciale.</h2>
+		<h2>Nos Recommandations:</h2>
+		<section class="container">
+		{% for film in tableau_films %}
+		<article class="block miniature film-item passif">
+			<img src="{{ film.affiche }}" alt="{{ film.nom_film }}">
+			<a href="detail.php?id={{film.id}}"><div class="voir-detail">Voir détail</div></a></p>
+			<p><a href="detail.php?id={{film.id}}">{{ film.nom_film }}</a></p>
+		</article>
+		{% endfor%}
+		</section>
+	</div>
+	{% endblock %}
+</main>
+<footer>
+	<nav>
+		<a href="index.php">Accueil</a> 
+		<a href="themes.php">Les thèmes</a> 
+		<a href="realisateurs.php">Les réalisateurs</a> 
+		<a href="annees.php">Les années</a> 
+		<a href="films_all.php">Tous les films</a>
+	</nav>
+</footer>
+</body>
+</html>
+

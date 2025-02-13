@@ -1,0 +1,24 @@
+{% extends 'themes.twig' %}
+
+{% block main %}
+<aside>
+        <ul>
+            {% for theme in tableau_themes %}
+            <li><a href="films_par_themes.php?id={{ theme.id }}">{{ theme.nom }} ({{theme.film_count}})</a></li>
+            {% endfor %}
+        </ul>
+</aside>
+<section class="container">
+    <div class="right">
+        <div><a href="films_par_themes.php?id={{ id }}"><i class="bi bi-grid"></i></a></div>
+        <div><a href="films_par_themes_liste.php?id={{ id }}"><i class="bi bi-list"></i></a></div>
+    </div>
+    {% for film in tableau_films %}
+    <article class="block miniature film-item">
+        <img src="{{ film.affiche }}" alt="{{ film.nom_film }}">
+        <p><a href="detail.php?id={{film.id}}">{{ film.nom_film }}</a></p>
+    </article>
+    {% endfor %}
+</section>
+{% endblock %}
+

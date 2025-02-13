@@ -1,0 +1,13 @@
+{% extends 'base.twig' %}
+{% block main %}
+<aside>
+<ul>
+    {% for films in tableau_films %}
+    <li><a href="films_par_annees.php?id={{ films.annee }}">{{ films.annee }}</a></li>
+    {% endfor %}
+</ul>
+</aside>
+<section class="container">
+<p>Sélectionnez une année dans la liste de gauche</p>
+</section>
+{% endblock %}

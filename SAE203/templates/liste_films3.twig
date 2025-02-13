@@ -1,0 +1,23 @@
+{% extends 'annees.twig' %}
+
+{% block main %}
+<aside>
+<ul>
+    {% for films in tableau_films %}
+    <li><a href="films_par_annees.php?id={{ films.annee }}">{{ films.annee }}</a></li>
+    {% endfor %}
+</ul>
+</aside>
+<section class="container">
+<div class="right">
+    <div><a href="films_par_annees.php?id={{ id }}"><i class="bi bi-grid"></i></a></div>
+    <div><a href="films_par_annees_liste.php?id={{ id }}"><i class="bi bi-list"></i></a></div>
+</div>
+{% for film in tableau_annees %}
+<article class="block miniature film-item">
+    <img src="{{ film.affiche }}" alt="{{ film.nom_film }}">
+    <p><a href="detail.php?id={{film.id}}">{{ film.nom_film }}</a></p>
+</article>
+{% endfor %}
+</section>
+{% endblock %}
