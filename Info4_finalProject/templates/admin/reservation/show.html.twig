@@ -1,0 +1,15 @@
+{% extends 'index.html.twig' %}
+
+
+{% block main %}
+    <h1>Détail de la réservation</h1>
+
+    <ul>
+        <li><strong>ID :</strong> {{ reservation.id }}</li>
+        <li><strong>Objet :</strong> {{ reservation.objet.name }}</li>
+        <li><strong>Utilisateur :</strong> {{ reservation.user.email }}</li>
+        <li><strong>Date :</strong> {{ reservation.date|date('d/m/Y H:i') }}</li>
+    </ul>
+
+    <a href="{{ path('admin_reservation_index') }}">← Retour à la liste des réservations</a>
+{% endblock %}

@@ -1,0 +1,18 @@
+{% extends 'index.html.twig' %}
+
+{% block main %}
+    <h1>Détail de l'objet</h1>
+
+    <ul>
+        <li><strong>Nom :</strong> {{ objet.name }}</li>
+        <li><strong>Description :</strong> {{ objet.description }}</li>
+        <li><strong>Prix :</strong> {{ objet.prix }} €</li>
+        <li><strong>Catégorie :</strong> {{ objet.categorie.name }}</li>
+        <li><strong>Sous‑catégorie :</strong> {{ objet.sousCategorie.name }}</li>
+        <li><strong>Image :</strong>
+            <img src="{{ asset(objet.img) }}" alt="{{ objet.name }}" style="max-height:100px">
+        </li>
+    </ul>
+
+    <a href="{{ path('admin_objet_index') }}">← Retour à la liste des objets</a>
+{% endblock %}

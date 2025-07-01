@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Couds & Découds</title>
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="icon" type="image/png" href="{{ asset('img/favicon_io/favicon-16x16.png') }}" sizes="16x16" />
+    <link rel="icon" type="image/png" href="{{ asset('img/favicon_io/favicon-32x32.png') }}" sizes="32x32" />
+    <link rel="icon" type="image/x-icon" href="{{ asset('img/favicon_io/favicon.ico') }}" />
+    <link rel="shortcut icon" href="{{ asset('img/favicon_io/favicon.ico') }}" />
+</head>
+<body>
+<header>
+    <a href="{{ path('accueil') }}"><img class="logo" src="{{ asset('img/logo.jpg') }}" alt="logo"></a>
+
+    <div class="menu-toggle" id="mobile-menu">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+    </div>
+    <nav class="menu">
+        <ul class="categories">
+            {% for categorie in categories %}
+                <li class="categorie-item">
+                    <a href="{{ path('category_show', { id: categorie.id }) }}">{{ categorie.name }}</a>
+                    {% if categorie.sousCategories is not empty %}
+                        <ul class="sous-categories">
+                            {% for sous in categorie.sousCategories %}
+                                <li>
+                                    <a href="{{ path('subcategory_show', { id: sous.id }) }}">{{ sous.name }}</a>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                </li>
+            {% endfor %}
+
+                {% if app.user %}
+                    {% if is_granted('ROLE_PRO') or is_granted('ROLE_ADMIN') %}
+                        <li><a href="{{ path('admin_objet_index') }}">Gérer mes objets</a></li>
+                        <li><a href="{{ path('admin_reservation_index') }}">Gérer mes réservations</a></li>
+                    {% endif %}
+                    <li><a href="{{ path('app_reservation_index') }}">Mes réservations</a></li>
+                    <li><a href="{{ path('app_logout') }}">Logout</a></li>
+                {% else %}
+                    <li><a href="{{ path('app_login') }}">Login</a></li>
+                {% endif %}
+        </ul>
+    </nav>
+
+
+</header>
+{% block main %}
+    <main class="main_accueil">
+        <h1>Couds & Découds</h1>
+        <section class="carousel_centre">
+            <div class="carousel">
+                <div class="carousel-inner">
+                    <article class="carousel-item"><img src="{{ asset('img/accueil/carousel_materiel.jpg') }}" alt="actu materiel hivers"></article>
+                    <article class="carousel-item"><img src="{{ asset('img/accueil/carousel_cours.jpg') }}" alt="actu cours hivers"></article>
+                    <article class="carousel-item"><img src="{{ asset('img/accueil/carousel_tuto.jpg') }}" alt="actu tuto hivers"></article>
+                </div>
+                <div class="carousel-controls">
+                    <button id="prev">&#10094;</button>
+                    <button id="next">&#10095;</button>
+                </div>
+            </div>
+        </section>
+        <section class="section_icones">
+            <article>
+                <div class="icone">
+                    <i class="bi bi-bag-heart"></i>
+                </div>
+                <div class="texte_icone">
+                    <h2>Matériaux</h2>
+                    <p>Louez ou achetez du matériels à des particuliers.</p>
+                </div>
+            </article>
+            <article>
+                <div class="icone">
+                    <i class="bi bi-book"></i>
+                </div>
+                <div class="texte_icone">
+                    <h2>Cours</h2>
+                    <p>Suivez des cours en ligne ou à domicile proposés par des professionnels.</p>
+                </div>
+            </article>
+            <article>
+                <div class="icone">
+                    <i class="bi bi-scissors"></i>
+                </div>
+                <div class="texte_icone">
+                    <h2>Tutos</h2>
+                    <p>Retrouvez des tutos gratuitement écrit par notre équipe et notre communauté.</p>
+                </div>
+            </article>
+        </section>
+    </main>
+{% endblock %}
+<footer>
+    <img class="logo" src="{{ asset('img/logo.jpg') }}" alt="logo">
+    <ul>
+        <li style="margin-right: 5px"><a href="{{path('contact')}}">Contact</a></li>
+        <li><a href="{{path('mentionsLegales')}}">Mentions Légales</a></li>
+    </ul>
+</footer>
+<script src="{{ asset('js/script.js') }}"></script>
+</body>
+</html>

@@ -1,0 +1,35 @@
+{% extends 'index.html.twig' %}
+
+{% block main %}
+    <h1>{{ categorie.name }}</h1>
+
+    <article class="article_filtres">
+        {% for sousCategorie in sousCategories %}
+            <button><a href="{{ path('subcategory_show', {'id': sousCategorie.id}) }}">{{ sousCategorie.name }}</a></button>
+        {% else %}
+            <li>Aucune sous-catégorie</li>
+        {% endfor %}
+    </article>
+
+    <section class="container">
+        {% if objets|length > 0 %}
+                {% for objet in objets %}
+                    <article class="cards">
+                        <div>
+                            <img src="{{ asset(objet.img) }}">
+                        </div>
+                        <div>
+                            <h3>{{ objet.name }}</h3>
+                            <div class="prix">
+                                <p>Prix : {{ objet.prix }} €</p>
+                                <button><a href="{{ path('app_objet_show', {id: objet.id}) }}">Voir plus</a></button>
+                            </div>
+                        </div>
+                    </article>
+                {% endfor %}
+        {% else %}
+            <p>Aucun objet disponible dans cette sous-catégorie.</p>
+        {% endif %}
+    </section>
+
+{% endblock %}

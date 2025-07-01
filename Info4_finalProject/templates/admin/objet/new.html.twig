@@ -1,0 +1,14 @@
+{% extends 'index.html.twig' %}
+
+{% block title %}Créer un objet{% endblock %}
+
+{% block main %}
+    <h1>Créer un objet</h1>
+
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    <button class="btn">Enregistrer</button>
+    {{ form_end(form) }}
+
+    <a href="{{ path('admin_objet_index') }}">← Retour à la liste des objets</a>
+{% endblock %}

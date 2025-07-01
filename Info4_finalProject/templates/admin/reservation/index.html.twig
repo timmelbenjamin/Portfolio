@@ -1,0 +1,40 @@
+{% extends 'index.html.twig' %}
+
+{% block main %}
+    <h1>Gestion des réservations</h1>
+
+    {% if is_granted('ROLE_ADMIN') %}
+        <p>Vous êtes administrateur : toutes les réservations.</p>
+    {% else %}
+        <p>Vous êtes professionnel : les réservations de vos objets.</p>
+    {% endif %}
+
+    <table>
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Objet</th>
+            <th>Utilisateur</th>
+            <th>Date</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for reservation in reservations %}
+            <tr>
+                <td>{{ reservation.id }}</td>
+                <td>{{ reservation.objet.name }}</td>
+                <td>{{ reservation.user.email }}</td>
+                <td>{{ reservation.date|date('d/m/Y H:i') }}</td>
+                <td>
+                    <a href="{{ path('admin_reservation_show', {id: reservation.id}) }}">Voir</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">Aucune réservation trouvée.</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

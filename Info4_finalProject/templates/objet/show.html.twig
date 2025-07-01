@@ -1,0 +1,34 @@
+{% extends 'index.html.twig' %}
+
+{% block main %}
+    {% if objet|length > 0 %}
+            <article class="detail">
+                <div>
+                    <img src="{{ asset(objet.img) }}" alt="{{objet.name}}">
+                </div>
+                <div class="detail_texte">
+                    <div>
+                        <h2>{{objet.name}}</h2>
+                        <p>Description : {{ objet.description }}</p>
+                        <p>Prix : {{objet.prix}} €</p>
+                    </div>
+                    <div class="action">
+                        {% if app.user %}
+                        <button>
+                            <a href="{{ path('app_reservation_new', {'id': objet.id}) }}">Réserver cet objet</a>
+                        </button>
+                        {% else %}
+                            <button>
+                                <a href="{{ path('app_login', {'id': objet.id}) }}">Réserver cet objet</a>
+                            </button>
+                        {% endif %}
+                        <a href="{{ path('category_show', { id: objet.categorie.id }) }}">Retour</a>
+                    </div>
+                </div>
+            </article>
+    {% else %}
+        <p>Aucun objet disponible</p>
+    {% endif %}
+
+
+{% endblock %}

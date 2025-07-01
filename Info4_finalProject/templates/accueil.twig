@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Couds & Découds</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="icon" type="image/png" href="../public/img/favicon_io/favicon-16x16.png" sizes="16x16" />
+    <link rel="icon" type="image/png" href="../public/img/favicon_io/favicon-32x32.png" sizes="32x32" />
+    <link rel="icon" type="image/x-icon" href="../public/img/favicon_io/favicon.ico" />
+    <link rel="shortcut icon" href="../public/img/favicon_io/favicon.ico" />
+</head>
+<body>
+    <header>
+        <img class="logo" src="../public/img/logo.jpg" alt="logo">
+        <div class="menu-toggle" id="mobile-menu">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </div>
+        <ul>
+            {% for categorie in categories %}
+                <li>
+                    <strong>{{ categorie.name }}</strong>
+                    {% if categorie.sousCategories is not empty %}
+                        <ul>
+                            {% for sous in categorie.sousCategories %}
+                                <li>
+                                    <p>
+                                        {{ sous.name }}
+                                    </p>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    {% else %}
+                        <p><em>Aucune sous-catégorie</em></p>
+                    {% endif %}
+                </li>
+            {% endfor %}
+        </ul>
+    </header>
+    {% block main %}
+    <main class="main_accueil">        
+        <h1>Couds & Découds</h1>
+        <section class="carousel_centre">
+            <div class="carousel">
+                <div class="carousel-inner">
+                    <article class="carousel-item"><img src="../../Info4_finalProject/public/img/accueil/carousel_materiel" alt="actu materiel hivers"></article>
+                    <article class="carousel-item"><img src="../../Info4_finalProject/public/img/accueil/carousel_cours" alt="actu cours hivers"></article>
+                    <article class="carousel-item"><img src="../../Info4_finalProject/public/img/accueil/carousel_tuto" alt="actu tuto hivers"></article>
+                </div>
+                <div class="carousel-controls">
+                    <button id="prev">&#10094;</button>
+                    <button id="next">&#10095;</button>
+                </div>
+            </div>
+        </section>
+        <section class="section_icones">
+            <article>
+                <div class="icone">
+                    <i class="bi bi-bag-heart"></i>
+                </div>
+                <div class="texte_icone">
+                    <h2>Matériaux</h2>
+                    <p>Louez ou achetez du matériels à des particuliers.</p>
+                </div>
+            </article>
+            <article>
+                <div class="icone">
+                    <i class="bi bi-book"></i>
+                </div>
+                <div class="texte_icone">
+                    <h2>Cours</h2>
+                    <p>Suivez des cours en ligne ou à domicile proposés par des professionnels.</p>
+                </div>
+            </article>
+            <article>
+                <div class="icone">
+                    <i class="bi bi-scissors"></i>
+                </div>
+                <div class="texte_icone">
+                    <h2>Tutos</h2>
+                    <p>Retrouvez des tutos gratuitement écrit par notre équipe et notre communauté.</p>
+                </div>
+            </article>
+        </section>
+        <h2>Matériaux Populaires</h2>
+        <section class="slider">
+            <div class="slides_materiel">
+                {% for materiel in tableau_materiel %}
+                    <div class="slide_materiel">
+                        <article class="cards">
+                            <div>
+                                <img src="../img/materiel/{{materiel.image_src}}" alt="{{materiel.titre}}">
+                            </div>
+                            <div>
+                                <h3>{{ materiel.titre }}</h3>
+                                <div class="prix">
+                                    <button><a href="controleur.php?page=materiel&action=read&id={{materiel.id}}&id_utilisateur={{id_utilisateur}}&role={{role}}">Voir plus</a></button>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+                {% endfor %}  
+            </div>
+            <div class="slider-controls">
+                <button class="prev" onclick="moveSlide_materiel(-1)">&#10094;</button>
+                <button class="next" onclick="moveSlide_materiel(1)">&#10095;</button>
+            </div>
+        </section>
+        <h2>Cours Populaires</h2>
+        <section class="slider">
+            <div class="slides_cours">
+                {% for cours in tableau_cours %}
+                    <div class="slide_cours">
+                        <article class="cards">
+                            <div>
+                                <img src="../img/cours/{{cours.image_src}}" alt="{{cours.titre}}">
+                            </div>
+                            <div>
+                                <h3>{{ cours.titre }}</h3>
+                                <div class="prix">
+                                    <button><a href="controleur.php?page=cours&action=read&id={{cours.id}}&id_utilisateur={{id_utilisateur}}&role={{role}}">Voir plus</a></button>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+                {% endfor %}  
+            </div>
+            <div class="slider-controls">
+                <button class="prev" onclick="moveSlide_cours(-1)">&#10094;</button>
+                <button class="next" onclick="moveSlide_cours(1)">&#10095;</button>
+            </div>
+        </section>
+        <h2>Les derniers Tutos</h2>
+        <section class="slider">
+            <div class="slides_tuto">
+                {% for tuto in tableau_tuto %}
+                    <div class="slide_tuto">
+                        <article class="cards">
+                            <div>
+                                <img src="../img/tuto/{{tuto.image_src}}" alt="{{tuto.titre}}">
+                            </div>
+                            <div>
+                                <h3>{{ tuto.titre }}</h3>
+                                <div class="prix">
+                                    <button><a href="controleur.php?page=tuto&action=read&id={{tuto.id}}&id_utilisateur={{id_utilisateur}}&role={{role}}">Voir plus</a></button>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+                {% endfor %}  
+            </div>
+            <div class="slider-controls">
+                <button class="prev" onclick="moveSlide_tuto(-1)">&#10094;</button>
+                <button class="next" onclick="moveSlide_tuto(1)">&#10095;</button>
+            </div>
+        </section>
+    </main>
+    {% endblock %}
+    <footer>
+        <img class="logo" src="../public/img/logo.jpg" alt="logo">
+            <ul>  
+                <li><a href="contact.php?&id_utilisateur={{id_utilisateur}}&role={{role}}">Contact</a></li>
+                <li><a href="mentions-legales.php?&id_utilisateur={{id_utilisateur}}&role={{role}}">Mentions Légales</a></li>
+            </ul>
+    </footer>
+    <script src="script.js"></script>
+    </body>
+    </html>

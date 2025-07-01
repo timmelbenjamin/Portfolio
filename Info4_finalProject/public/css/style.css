@@ -1,0 +1,637 @@
+/*Body*/
+
+body{
+    margin : 0;
+    padding: 0;
+}
+
+/*Header*/
+
+header{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    background-color: black;
+    color : white;
+    padding : 10px 100px;
+}
+
+.logo{
+    width : 100px
+}
+
+.menu .categories {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.menu .categorie-item {
+    position: relative;
+    display: inline-block;
+    margin-right: 20px;
+}
+
+.menu .sous-categories {
+    display: none;
+    position: absolute;
+    background-color: black;
+    padding: 10px;
+    list-style: none;
+    border: 1px solid #ccc;
+    z-index: 1000;
+}
+
+.menu .categorie-item:hover .sous-categories {
+    display: block;
+}
+
+header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    background-color: black;
+    color: white;
+    padding: 10px 100px;
+}
+
+.logo {
+    width: 100px;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+nav a {
+    color: white;
+}
+
+nav a:hover {
+    color: grey;
+}
+
+nav li {
+    margin-left: 20px;
+}
+
+nav i {
+    font-size: 40px;
+}
+
+.menu-toggle {
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+}
+
+.menu-toggle .bar {
+    height: 3px;
+    width: 25px;
+    background-color: white;
+    margin: 3px 0;
+}
+
+/*Main accueil*/
+
+main{
+    min-height:460px;
+}
+
+h1,
+h2{
+    text-align: center;
+}
+
+.main_accueil{
+    text-align: center;
+}
+
+.carousel_centre{
+    display: flex;
+    justify-content: center;
+}
+
+.carousel {
+    width: 1000px;
+    overflow: hidden;
+    position: relative;
+}
+
+.carousel-inner {
+    display: flex;
+    transition: transform 0.5s ease;
+}
+
+.carousel-item {
+    min-width: 100%;
+}
+
+.carousel-controls {
+    position: absolute;
+    top: 50%;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    transform: translateY(-50%);
+}
+
+.carousel-controls button {
+    width: 40px;
+    height: 40px;
+    border: none;
+    border-radius: 50%; 
+    background-color: lightgray; 
+    color: white; 
+    cursor: pointer;
+    font-size: 16px; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.carousel-controls button:hover {
+    background-color: gray; 
+}
+
+.slider {
+    position: relative;
+    width: 80%;
+    margin: auto;
+    overflow: hidden;
+}
+
+.slides_materiel,
+.slides_cours,
+.slides_tuto {
+    display: flex;
+    transition: transform 0.5s ease;
+}
+
+.slide_materiel,
+.slide_cours,
+.slide_tuto {
+    min-width: 35%; 
+    text-align: center;
+}
+
+.prev {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    border: none;
+    cursor: pointer;
+    padding: 10px;
+    left: 5px;
+}
+
+.next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    border: none;
+    cursor: pointer;
+    padding: 10px;
+    right: 30px;
+}
+
+.main_accueil h2{
+    text-align: left;
+    margin-left : 180px
+}
+
+.section_icones{
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.section_icones article{
+    display: flex;
+    justify-content: space-between;
+}
+
+.icone{ 
+    background-color: lightgrey;
+    border-radius: 100%;
+    width : 80px;
+    height: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+    margin : 10px   
+}
+
+.icone i{
+    font-size: 55px;
+}
+
+.texte_icone,
+.texte_icone h2{
+    text-align: left;
+    margin : 5px;
+    width: 260px
+}
+
+.cards {
+    background-color: lightgrey;
+    border-radius: 1rem;
+    border: solid 1px black;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    align-items: center;
+    width : 300px;
+    height : 260px;
+    padding: 10px;
+    margin : 10px;
+}
+
+.cards img{
+    max-width: 280px;
+    max-height: 150px;
+}
+
+/*Main Catégories*/
+
+.container{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.modif{
+    background-color: lightblue;
+}
+
+.modif:hover {
+    background-color: aqua;
+}
+
+.modif a{
+    color: black;
+    text-decoration: none;
+}
+
+.del{
+    background-color: red;
+}
+
+.del:hover{
+    background-color: darkred;
+}
+
+.del a{
+    color: black;
+    text-decoration: none;
+}
+
+.creation{
+    display: flex;
+    justify-content: center;
+}
+
+.creation button{
+    padding: 5px;
+    margin-top:10px;
+    background-color : lightblue
+}
+
+.creation button:hover{
+    background-color : aqua
+}
+
+.creation a{
+    color: black;
+    text-decoration: none;
+}
+
+.article_filtres{
+    display: flex;
+    justify-content: center;
+}
+
+.article_filtres button{
+    margin: 5px 10px;
+    padding : 10px
+}
+
+.article_filtres button a{
+    text-decoration: none;
+    color: black;
+}
+
+.prix{
+    display: flex;
+    justify-content: space-around;
+    gap : 40px
+}
+
+.prix button{
+    padding: 10px 20px;
+    border-radius: 1rem;
+    border: solid 1px black;
+}
+
+.prix a{
+    color: black;
+    text-decoration: unset;
+}
+
+.prix button:hover{
+    background-color: lightblue;
+}
+
+.detail{
+    padding: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    justify-content: space-evenly;
+}
+
+.detail img{
+    max-width: 600px;
+    max-height: 450px;
+}
+
+.detail_texte{
+    max-width: 500px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.filtre{
+    display : flex;
+    justify-content: space-around;
+}
+
+.filtre div{
+    padding : 10px;
+    background-color: lightgray;
+    border-radius: 2rem;
+    border: solid 1px black;
+}
+
+.action{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.action button{
+    width: 200px;
+    padding : 10px;
+    background-color: lightgray;
+    border-radius: 2rem;
+    border: solid 1px black;
+}
+
+.action button:hover{
+    background-color: grey;
+}
+
+.action a{
+    margin-top: 20px;
+    color: black;
+}
+
+.article_tuto{
+    
+    display: flex;
+    justify-content: center;
+}
+
+.tuto_bloc{
+    width: 1000px;
+    background-color: lightgrey;
+    text-align:left;
+    padding : 10px 20px;
+    margin-bottom: 20px;
+}
+
+.tuto_bloc h2{
+    text-align:left;
+}
+
+.tuto_video {
+    background-color: lightgrey;
+    padding : 10px 20px;
+    margin-bottom: 20px;
+}
+
+.form-centre{
+    text-align: center;
+}
+
+.form-centre input{
+    margin : 10px;
+}
+
+/* Main compte */
+
+.main_compte{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 60vh;
+    margin: 0;
+    background-color: #f4f4f4;
+}
+
+.main_compte section{
+    display: flex;
+    width: 80%;
+    max-width: 800px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.main_compte article{
+    padding: 20px;
+    width: 50%;
+}
+
+.vertical-bar{
+    width: 1px;
+    background-color: black;
+    margin : 15px 0px
+}
+
+.deconnexion{
+    text-align: center;
+    margin-top: 10px;
+}
+
+.h3-centre{
+    text-align: center;
+}
+
+.colonnne-article{
+    background-color: lightblue;
+    margin : 5px
+}
+
+/*Contact*/
+
+.main_formulaire {
+    max-width: 600px;
+    margin: auto;
+    background: white;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.main_formulaire .form-group {
+    margin-bottom: 15px;
+}
+
+.main_formulaire label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.main_formulaire input[type="text"],
+.main_formulaire input[type="email"],
+.main_formulaire textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.main_formulaire button {
+    width: 100%;
+    padding: 10px;
+    background-color: gray;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.main_formulaire button:hover {
+    background-color: lightgray;
+}
+
+.main_formulaire .message {
+    color: red;
+}
+
+/*Footer*/
+
+footer{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    background-color: black;
+    color : white;
+    padding : 10px 100px;
+}
+
+footer ul {
+    list-style: none;
+    text-align: center;
+}
+
+footer a{
+    color: white;
+}
+
+footer a:hover{
+    color: grey
+}
+
+footer li {
+    padding-top:5px;
+}
+
+
+@media only screen and (max-width: 760px) {
+    .main_formulaire{
+        max-width : 600px;
+        height: 1400px;
+    }
+}
+
+/*Responsive*/
+@media (max-width: 768px) {
+
+    nav {
+        position: relative; 
+        z-index: 10; 
+        background-color: black;
+    }
+
+    nav ul {
+        list-style: none;
+        display: none; 
+        flex-direction: column; 
+        position: absolute; 
+        top: 60px; 
+        right: 0;
+        background-color: black; 
+        width: 100%;
+        padding: 10px 0;
+        z-index: 20; 
+}
+
+    nav ul.active {
+        display: flex; 
+    }
+
+    .menu-toggle {
+        display: flex; 
+    }
+
+    nav li {
+        margin: 10px 0; 
+        text-align: center; 
+    }
+    
+    .carousel {
+        width: 400px;
+        overflow: hidden;
+        position: relative;
+    }
+    
+    .carousel img{
+        width : 260px
+    }
+    
+    .carousel-controls {
+        position: absolute;
+        top: 50%;
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        transform: translateY(-50%);
+    }
+
+    .section_icones{
+        display: flex;
+        flex-direction: column;
+    }
+
+    .section_icones article {
+        display: flex;
+        justify-content: center;
+    }
+    
+    .slide_materiel, 
+    .slide_cours, 
+    .slide_tuto {
+        max-width: 80%;
+        text-align: center;
+    }
+    
+    
+}

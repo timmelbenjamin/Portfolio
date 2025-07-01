@@ -1,0 +1,50 @@
+{% extends 'index.html.twig' %}
+
+
+{% block main %}
+    <h1>Gestion des objets</h1>
+
+    {% if is_granted('ROLE_ADMIN') %}
+        <p>Vous êtes administrateur : la liste de tous les objets.</p>
+    {% else %}
+        <p>Vous êtes professionnel : la liste de vos objets.</p>
+    {% endif %}
+
+    <table>
+        <thead>
+        <tr>
+            <th>Nom</th>
+            <th>Prix</th>
+            <th>Catégorie</th>
+            <th>Sous-catégorie</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for objet in objets %}
+            <tr>
+                <td>{{ objet.name }}</td>
+                <td>{{ objet.prix }} €</td>
+                <td>{{ objet.categorie.name }}</td>
+                <td>{{ objet.sousCategorie.name }}</td>
+                <td>
+                    <a href="{{ path('admin_objet_show', {id: objet.id}) }}">Voir</a>
+                    <form method="post"
+                          action="{{ path('admin_objet_delete', {id: objet.id}) }}"
+                          style="display:inline"
+                          onsubmit="return confirm('Supprimer cet objet ?');">
+                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ objet.id) }}">
+                        <button class="btn-link">Supprimer</button>
+                    </form>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">Aucun objet trouvé.</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('admin_objet_new') }}" class="btn">Créer un nouvel objet</a>
+{% endblock %}
