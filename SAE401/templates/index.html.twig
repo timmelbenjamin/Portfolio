@@ -1,0 +1,154 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Azure
+{% endblock %}
+
+{% block body %}
+	<header class="bg-cover bg-center relative h-[700px] flex flex-col justify-between pb-[150px]" style="background-image: url('{{ asset('img/img_header.png') }}');">
+		<nav class="flex justify-between items-center px-[100px] py-[25px]">
+			<div class="flex items-center gap-2">
+				<img src="{{ asset('img/logo.svg') }}" alt="Logo" class="w-8 h-8">
+				<span class="text-white text-xl font-bold">Azure</span>
+			</div>
+			{% if app.user %}
+				<a href="{{path('profil')}}">
+					<svg xmlns="http://www.w3.org/2000/svg" width="20" height="23" viewbox="0 0 20 23" fill="none">
+						<path d="M10 12.6111C13.1066 12.6111 15.625 10.1238 15.625 7.05556C15.625 3.98731 13.1066 1.5 10 1.5C6.8934 1.5 4.375 3.98731 4.375 7.05556C4.375 10.1238 6.8934 12.6111 10 12.6111ZM10 12.6111C12.3869 12.6111 14.6761 13.5476 16.364 15.2146C18.0518 16.8816 19 19.1425 19 21.5M10 12.6111C7.61305 12.6111 5.32387 13.5476 3.63604 15.2146C1.94821 16.8816 1 19.1425 1 21.5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+					</svg>
+				</a>
+			{% else %}
+				<a class="text-white" href="{{path('app_login')}}">Se connecter</a>
+			{% endif %}
+		</nav>
+
+		<div class="w-full flex flex-col items-center justify-center text-white text-center px-[20px] xl:px-0">
+			<h1 class="text-[64px] font-[500]">Les plus beaux sentiers à portée de pas</h1>
+			<div class="flex gap-4 mt-6 w-full max-w-[1000px]">
+				<div class="text-black w-full">
+					{{ form_start(form, { attr: { class: 'w-full'}, 'action': path('search')}) }}
+
+					<div class="activity-buttons flex gap-[30px]">
+
+						{% for child in form.activities %}
+							<label id="label_{{child.vars.id}}" class="activityButton flex items-center justify-center max-w-[150px] w-full h-[30px] gap-2 rounded-full bg-white text-black hover:scale-97 transition duration-300 cursor-pointer {% if child.vars.label == 'None' %}hidden{% endif %}">
+								{{ form_widget(child, { attr: { class: 'hidden' } }) }}
+								<p>
+									{{child.vars.label}}</p>
+							</label>
+						{% endfor %}
+					</div>
+
+					<div class="w-full mt-6 flex justify-center">
+						<div class="relative w-full h-[60px] bg-white rounded-full flex items-center pl-[40px] pr-[10px] py-[10px] gap-[10px]">
+							<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24" fill="none">
+								<path d="M21 21L16.7 16.7M19 11C19 15.4183 15.4183 19 11 19C6.58172 19 3 15.4183 3 11C3 6.58172 6.58172 3 11 3C15.4183 3 19 6.58172 19 11Z" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+							</svg>
+							{{ form_widget(form.location, { attr: { class: 'w-full py-3 text-lg bg-white text-black', placeholder: 'Ville, Région...'}}) }}
+							<button type="Submit" class="black-gradiant hover:scale-97 transition duration-300 cursor-pointer flex justify-center items-center text-white w-[200px] text-[16px] h-[40px] rounded-full">
+								Rechercher
+							</button>
+						</div>
+					</div>
+
+					{{ form_end(form)}}
+				</div>
+			</div>
+		</header>
+
+		<main class="max-w-[1260px] flex flex-col gap-[100px] mx-auto my-[175px] px-[15px] xl:px-0">
+			<section>
+				<h2 class="text-[48px] font-[500] mb-[45px]">Les plus beaux itinéraires
+					<span class="bg-gradient-to-r from-[#63F679] to-[#3FBB52] bg-clip-text text-transparent font-[600]">français</span>
+				</h2>
+				<div class="flex max-w-[1260px] overflow-x-auto gap-[30px] scrollbar-hide">
+					{% for post in posts %}
+						<a href="{{ path('app_posts_show', {'id': post.id}) }}" class="bg-white overflow-hidden h-full max-h-[350px] hover:scale-98 transition duration-300 w-full min-w-[400px] max-w-[400px]">
+							<img src="{{ asset('uploads/' ~ post.postsImages[0].filename) }}" alt="Logo" class=" w-full max-h-[200px] rounded-t-[15px] object-cover">
+
+							<div class="p-4 border-l-[1px] border-r-[1px] border-b-[1px] border-[#ABB3BA] rounded-b-[10px]">
+								<h3 class="text-xl font-bold">{{post.title}}</h3>
+								<p class="text-gray-500">{{post.region}},
+									{{post.city}}, Haute-Savoie, France</p>
+								<div class="flex items-center mt-2">
+									{{ (post.ascEle ?? 0)|number_format(0, ',', ' ') }}
+									m D+ •
+									{{ (post.descEle ?? 0)|number_format(0, ',', ' ') }}
+									m D-
+								</span>
+							</div>
+						</div>
+					</a>
+				{% endfor %}
+			</div>
+		</section>
+
+		<section class="">
+
+			<h2 class="text-[48px] font-[500] mb-[45px]">Découvrez nos
+				<span class="bg-gradient-to-r from-[#63F679] to-[#3FBB52] bg-clip-text text-transparent font-bold">activités</span>
+			</h2>
+
+			<div class="flex gap-[30px] flex-nowrap overflow-x-scroll w-full scrollbar-hide">
+				<article class="min-w-[350px] h-[500px] bg-cover rounded-[10px] bg-[url('{{ asset('/img/randonnee.png') }}')] px-[25px] py-[15px] bg-hover-zoom">
+					<h3 class="text-white text-[40px]">Randonnée</h3>
+				</article>
+				<article class="min-w-[350px] h-[500px] bg-cover rounded-[10px] bg-[url('{{ asset('/img/trail.png') }}')] px-[25px] py-[15px] bg-hover-zoom">
+					<h3 class="text-white text-[40px]">Trail</h3>
+				</article>
+				<article class="min-w-[350px] h-[500px] bg-cover rounded-[10px] bg-[url('{{ asset('/img/skis.png') }}')] px-[25px] py-[15px] bg-hover-zoom">
+					<h3 class="text-white text-[40px]">Skis</h3>
+				</article>
+				<article class="min-w-[350px] h-[500px] bg-cover rounded-[10px] bg-[url('{{ asset('/img/velo.png') }}')] px-[25px] py-[15px] bg-hover-zoom">
+					<h3 class="text-white text-[40px]">Vélo</h3>
+				</article>
+			</div>
+
+		</section>
+
+		<section>
+
+			<h2 class="text-[48px] font-[500] mb-[45px]">Des itinéraires d'<span class="bg-gradient-to-r from-[#63F679] to-[#3FBB52] bg-clip-text text-transparent font-bold">experts</span>
+			</h2>
+
+			<article class="flex w-full h-fit xl:h-[415px] flex-col xl:flex-row">
+				<div class="flex max-w-[50%] w-full mt-[40px] mx-auto xl:mx-0">
+					<img class="absolute hover:rotate-[-6deg] transition duration-500 z-999 translate-x-[-75px] translate-y-[-75px] rotate-[-16deg]" src="{{ asset('img/guide_certif.svg') }}" alt="certificat guide">
+					<div class="absolute aspect-[2/3] z-997  rounded-[10px] max-h-[375px] h-full bg-hover-zoom bg-[url('{{ asset('img/guide_picture1.png') }}')]"></div>
+					<div class="absolute aspect-[1/1] border_box z-998 hover:rotate-[7deg] transition duration-300 translate-x-[200px] rounded-[10px] max-h-[335px] h-full rotate-[9.5deg] bg-hover-zoom bg-[url('{{ asset('img/guide_picture2.png') }}')]"></div>
+				</div>
+				<div class="flex flex-col max-w-full xl:max-w-[50%] w-full gap-[30px] mt-[300px] xl:mt-0 mx-auto xl:mx-0">
+					<p class="w-full text-[18px] font-[400] mt-[100px]">Nos itinéraires sont conçus par des guides professionnels, tous titulaires d’un diplôme d’État. Leur expertise garantit des parcours sécurisés.</p>
+					<a href="{{ path('app_register_guide') }}" class="max-w-[300px] hover:scale-[.97] transition duration-300 h-[50px] w-full rounded-full bg-green-gradient text-white flex justify-center items-center text-[16px]">Je suis guide</a>
+				</div>
+			</article>
+
+		</section>
+
+		<section class="mt-16 flex justify-center items-center">
+
+			<div class="w-full bg-black-gradient rounded-[25px] pt-[30px] pb-[65px] pl-[70px] relative innerzoom">
+				<div class="w-[80%] flex flex-col gap-[45px]">
+					<h4 class="text-[48px] font-[500] text-white">
+						Chacun sa
+						<span class="bg-gradient-to-r from-[#63F679] to-[#3FBB52] bg-clip-text text-transparent font-bold">trace
+						</span>
+					</h4>
+					<div class="text-white flex flex-col gap-[30px] text-[18px] font-[200]">
+						<p>
+							Créez et partagez vos parcours avec une communauté de passionnés. Que vous soyez coureur, cycliste ou randonneur, notre outil vous permet de tracer vos itinéraires et de les échanger avec d’autres sportifs.
+						</p>
+					</div>
+					<a class="cursor-pointer max-w-[300px] hover:scale-[.97] transition duration-300 h-[50px] w-full rounded-full bg-green-gradient text-white flex justify-center items-center text-[16px]">Nous rejoindre</a>
+					<img class="absolute max-h-[full] top-0 right-0" src="{{ asset('img/vector_line.svg') }}">
+				</div>
+			</div>
+
+		</section>
+
+	</main>
+	{% include 'footer.html.twig' %}
+{% endblock %}
+
+{% block javascripts %}
+	 <script type="module" src="{{ asset('scripts/home.js') }}"></script>
+{% endblock %}

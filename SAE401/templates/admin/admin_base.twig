@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>
+			{% block title %}Azure - Admin
+			{% endblock %}
+		</title>
+		 <script src="https://unpkg.com/lucide@latest"></script>
+
+		<link rel="stylesheet" href="{{ asset('styles/app.css') }}">
+	 <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+		 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+		 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+	</head>
+	<body>
+
+		<header class="h-[82px]">
+			<nav class="flex justify-between items-center px-[100px] py-[25px] de">
+				<a href="{{ path('home') }}" class="flex items-center gap-2 w-[200px]">
+					<img src="{{ asset('img/azure_black.svg') }}" alt="Logo" class="w-8 h-8">
+					<span class="text-black text-xl font-bold">Azure</span>
+				</a>
+				<ul class="flex gap-[20px]">
+					<li class="hover:underline text-[18px]">
+						<a class="" href="{{ path('admin_certif') }}">Certifications</a>
+					</li>
+					<li class="hover:underline text-[18px]">
+						<a class="" href="{{ path('app_posts_index') }}">Posts</a>
+					</li>
+				</ul>
+				<div class="w-[200px] flex justify-end">
+					<svg xmlns="http://www.w3.org/2000/svg" width="20" height="23" viewbox="0 0 20 23" fill="none">
+						<path d="M10 12.6111C13.1066 12.6111 15.625 10.1238 15.625 7.05556C15.625 3.98731 13.1066 1.5 10 1.5C6.8934 1.5 4.375 3.98731 4.375 7.05556C4.375 10.1238 6.8934 12.6111 10 12.6111ZM10 12.6111C12.3869 12.6111 14.6761 13.5476 16.364 15.2146C18.0518 16.8816 19 19.1425 19 21.5M10 12.6111C7.61305 12.6111 5.32387 13.5476 3.63604 15.2146C1.94821 16.8816 1 19.1425 1 21.5" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+					</svg>
+				</div>
+			</nav>
+		</header>
+		{% block body %}{% endblock %}
+		{% block javascripts %}
+			{% block importmap %}
+				{{ importmap('app') }}
+			{% endblock %}
+
+			{{ encore_entry_script_tags('app') }}
+
+		{% endblock %}
+	</body>
+</html>

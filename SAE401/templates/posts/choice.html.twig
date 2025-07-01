@@ -1,0 +1,62 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Créer un itinéraire
+{% endblock %}
+
+{% block body %}
+	<div class="bg-white ">
+		<header class="h-[82px]">
+			<nav class="flex justify-between items-center px-[100px] py-[25px] de">
+				<a href="{{ path('home') }}" class="flex items-center gap-2">
+					<img src="{{ asset('img/azure_black.svg') }}" alt="Logo" class="w-8 h-8">
+					<span class="text-black text-xl font-bold">Azure</span>
+				</a>
+				{% if app.user %}
+					<a href="{{path('profil')}}">
+						<svg xmlns="http://www.w3.org/2000/svg" width="20" height="23" viewbox="0 0 20 23" fill="none">
+							<path d="M10 12.6111C13.1066 12.6111 15.625 10.1238 15.625 7.05556C15.625 3.98731 13.1066 1.5 10 1.5C6.8934 1.5 4.375 3.98731 4.375 7.05556C4.375 10.1238 6.8934 12.6111 10 12.6111ZM10 12.6111C12.3869 12.6111 14.6761 13.5476 16.364 15.2146C18.0518 16.8816 19 19.1425 19 21.5M10 12.6111C7.61305 12.6111 5.32387 13.5476 3.63604 15.2146C1.94821 16.8816 1 19.1425 1 21.5" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+						</svg>
+					</a>
+				{% else %}
+					<a href="{{path('app_login')}}">Se connecter</a>
+				{% endif %}
+			</nav>
+		</header>
+
+		<main class="p-[15px]">
+			<section class="flex gap-[50px] items-center justify-center flex-col lg:flex-row">
+				<div class="m-[100px] ">
+					<h1 class="text-[50px] font-bold text-[#121212] leading-tight pb-[50px] text-center">Partager vos itinéraires</h1>
+					<p class="text-center">Partagez votre parcours en toute simplicité ! Notre outil vous permet de le diffuser pas à pas</p>
+					<a href="{{path('app_posts_new')}}" class="greenBtn w-full mt-[80px] gap-[13px]">
+						<svg xmlns="http://www.w3.org/2000/svg" width="26" height="20" viewbox="0 0 36 30" fill="none z-0">
+							<path d="M26.9628 7.71362C26.4662 7.6146 26.0596 7.30405 25.8496 6.85997C23.5242 1.95262 18.1337 -0.791359 12.7463 0.201813C7.83744 1.10197 3.98927 5.02065 3.16862 9.95501C2.92558 11.4118 2.94358 12.87 3.21813 14.2908C3.30815 14.7543 3.10861 15.2704 2.69904 15.6425C0.981242 17.2043 -0.00292969 19.4292 -0.00292969 21.7486C-0.00292969 26.2974 3.69821 30 8.24851 30H24.7514C30.9565 30 36.0033 24.9531 36.0033 18.748C36.0033 13.3996 32.2017 8.7578 26.9628 7.71362ZM22.6825 17.5583C22.39 17.8509 22.0059 17.9979 21.6218 17.9979C21.2378 17.9979 20.8537 17.8509 20.5612 17.5583L18.0002 14.9974V22.4987C18.0002 23.3283 17.3281 23.999 16.4999 23.999C15.6718 23.999 14.9997 23.3283 14.9997 22.4987V14.9974L12.4387 17.5583C11.8521 18.1449 10.904 18.1449 10.3174 17.5583C9.73077 16.9717 9.73077 16.0236 10.3174 15.437L14.3786 11.3758C14.9577 10.7967 15.7183 10.5056 16.4789 10.5011L16.4999 10.4966L16.5209 10.5011C17.2831 10.5056 18.0422 10.7967 18.6213 11.3758L22.6825 15.437C23.2691 16.0236 23.2691 16.9717 22.6825 17.5583Z" fill="currentColor"/>
+						</svg>Importer mon itinéraire
+					</a>
+					<a href="{{path('app_posts_new')}}" class="w-full mt-[20px] black-gradiant text-white rounded-[5px] h-[46px] flex items-center justify-center transition-all ease-in-out duration-300 cursor-pointer hover:scale-97">Créer mon itinéraire</a>
+				</div>
+				<section class="h-full w-full relative aspect-square lg:aspect-auto lg:mb-0">
+					<section class="w-full rounded-[15px] aspect-square lg:aspect-auto lg:h-[calc(100vh-82px-24px)]" id="carte"></section>
+					<div class="absolute top-[0] p-[12px] flex flex-col gap-[10px] items-center">
+						<img src="{{ asset('img/azure_black.svg') }}" alt="Logo" class="w-[40px] h-[40px] hover:scale-90 transition duration-300 cursor-pointer">
+
+						<button id="mapZoomIn" class="w-[50px] h-[50px] rounded-full black-gradiant text-white flex justify-center items-center opacity-[.6] cursor-pointer hover:scale-[.96] hover:opacity-100 transition duration-300">
+							<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewbox="0 0 24 24" fill="none">
+								<path d="M5 12H19M12 5V19" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+							</svg>
+						</button>
+						<button id="mapZoomOut" class="w-[50px] h-[50px] rounded-full black-gradiant text-white flex justify-center items-center opacity-[.6] cursor-pointer hover:scale-[.96] hover:opacity-100 transition duration-300">
+							<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewbox="0 0 24 24" fill="none">
+								<path d="M5 12H19" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+							</svg>
+						</button>
+					</div>
+				</section>
+			</main>
+		</div>
+	{% endblock %}
+
+	{% block javascripts %}  <script type="module" src="{{ asset('scripts/posts_choice.js') }}"></script>
+
+		 <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDsRQNVaLvck3Jhk-LqJqfkUY6cpKOA-3c&callback=initMap"></script>
+	{% endblock %}

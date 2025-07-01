@@ -1,0 +1,246 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Rechercher un itinéraire
+{% endblock %}
+
+
+{% block body %}
+
+	<div class="bg-white">
+		<header class="h-[82px]">
+			<nav class="flex justify-between items-center px-[100px] py-[25px] de">
+				<a href="{{ path('home') }}" class="flex items-center gap-2">
+					<img src="{{ asset('img/azure_black.svg') }}" alt="Logo" class="w-8 h-8">
+					<span class="text-black text-xl font-bold">Azure</span>
+				</a>
+				{% if app.user %}
+					<a href="{{path('profil')}}">
+						<svg xmlns="http://www.w3.org/2000/svg" width="20" height="23" viewbox="0 0 20 23" fill="none">
+							<path d="M10 12.6111C13.1066 12.6111 15.625 10.1238 15.625 7.05556C15.625 3.98731 13.1066 1.5 10 1.5C6.8934 1.5 4.375 3.98731 4.375 7.05556C4.375 10.1238 6.8934 12.6111 10 12.6111ZM10 12.6111C12.3869 12.6111 14.6761 13.5476 16.364 15.2146C18.0518 16.8816 19 19.1425 19 21.5M10 12.6111C7.61305 12.6111 5.32387 13.5476 3.63604 15.2146C1.94821 16.8816 1 19.1425 1 21.5" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+						</svg>
+					</a>
+				{% else %}
+					<a href="{{path('app_login')}}">Se connecter</a>
+				{% endif %}
+			</nav>
+		</header>
+
+		<main class="flex lg:max-h-[calc(100vh-82px)] h-full p-[12px] overflow-hidden flex-col-reverse lg:flex-row">
+			<section class="max-w-[900px] w-full lg:max-h-[calc(100vh-30px)] overflow-hidden pr-[30px]">
+
+				<div class="flex flex-col items-center text-white text-center w-full h-full">
+
+
+					<div class="text-black w-full">
+						{{ form_start(form, { attr: { class: 'w-full'}}) }}
+
+						<div class="activity-buttons justify-between flex gap-[30px] overflow-x-auto">
+
+							{% for child in form.activities %}
+								<label id="label_{{child.vars.id}}" class="activityButton flex items-center justify-center min-w-[120px] max-w-[150px] w-full h-[30px] gap-2 rounded-full bg-white text-black border border-[#ABB3BA] hover:scale-97 transition duration-300 cursor-pointer {% if child.vars.label == 'None' %}hidden{% endif %}">
+									{{ form_widget(child, { attr: { class: 'hidden' } }) }}
+									<p>
+										{{child.vars.label}}</p>
+								</label>
+							{% endfor %}
+						</div>
+
+						<div class="w-full mt-6 flex justify-center">
+							<div class="relative w-full h-[60px] bg-white rounded-full border border-gray-300 flex items-center pl-[40px] pr-[10px] py-[10px] gap-[10px]">
+								<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24" fill="none">
+									<path d="M21 21L16.7 16.7M19 11C19 15.4183 15.4183 19 11 19C6.58172 19 3 15.4183 3 11C3 6.58172 6.58172 3 11 3C15.4183 3 19 6.58172 19 11Z" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+								</svg>
+								{{ form_widget(form.location, { attr: { class: 'w-full py-3 text-lg bg-white text-black', placeholder: 'Ville, Région...'}}) }}
+								<button type="Submit" class="black-gradiant hover:scale-97 transition duration-300 cursor-pointer flex justify-center items-center text-white w-[200px] text-[16px] h-[40px] rounded-full">
+									Rechercher
+								</button>
+							</div>
+						</div>
+
+						{{ form_end(form)}}
+					</div>
+
+					{% if itineraires != [] %}
+						<p class="text-black text-xl text-left mt-10 w-[95%]">
+							<span class="bg-gradient-to-r from-[#63F679] to-[#3FBB52] bg-clip-text text-transparent">{{ itineraires|length }}</span>
+							sentiers trouvés.</p>
+						<button id="resetButton" class="px-6 py-2 text-sm green-gradiant text-white rounded-md shadow-lg hover:bg-yellow-400 focus:outline-none" style="display: none;">
+							Quitter le détail
+						</button>
+						<ul id="itineraires-list" class="mt-[20px] w-full h-full overflow-y-auto scrollbar-thin scrollbar-thumb-gray-500 scrollbar-track-gray-200 flex flex-col">
+							{% for post in itineraires %}
+								<li id="{{post.id}}" class="itinerary smallWidthItem transition-all ease-in-out duration-300 cursor-pointer mb-10 h-full">
+									<div class=" bg-white rounded-[10px] h-full transition-all duration-300">
+										{% if post.postsImages|first is not empty and post.postsImages|first.filename %}<img src="{{ ('uploads/' ~ post.postsImages|first.filename) }}" alt="oui" class="w-full h-48 object-cover rounded-tr-[10px] rounded-tl-[10px]">
+										{% endif %}
+										<div class="p-4 border-l-[1px] border-r-[1px] border-b-[1px] border-[#ABB3BA] rounded-b-[10px]">
+											<h2 class="text-black text-xl font-bold text-left">{{ post.title }}</h2>
+											<p class="text-gray-500 text-left">{{ post.region }},
+												{{ post.city }}</p>
+											<div class="flex items-center mt-2">
+												<span class="bg-gradient-to-r from-[#63F679] to-[#3FBB52] bg-clip-text text-transparent">★★★★★</span>
+												<span class="ml-2 text-black">4.7</span>
+												<span class="ml-auto text-gray-500">
+													{{ (post.ascEle ?? 0)|number_format(0, ',', ' ') }}
+													m D+ •
+													{{ (post.descEle ?? 0)|number_format(0, ',', ' ') }}
+													m D-
+												</span>
+											</div>
+										</div>
+									</div>
+
+									<div class="details">
+										<div class="flex justify-between items-center">
+											<p class="difficulty text-white text-left ml-3 w-[200px] mt-[10px] black-gradiant rounded-[50px] h-[30px] flex items-center justify-center">
+												<img src="{{ asset('img/logo_difficulty.png') }}" alt="Import" class="w-3 mr-3">{{ post.difficulty.name }}
+											</p>
+										</div>
+										<p class="description text-black text-left pl-4 mt-5 w-full">{{ post.description }}</p>
+										<div class="infos fullWidthInfo flex flex-col" style="display: none">
+
+											<div class="">
+												<h2 class="font-bold text-[40px] text-black text-left mt-10">Conditions</h2>
+												<div class="flex gap-[15px] justify-form_start items-center" id="currentWeather">
+													<p class="text-[#63F679] text-[48px] font-[700]" id="currentTemp"></p>
+													<img id="weatherIcon" src="">
+												</div>
+												<div class="flex gap-[5px]">
+													<p class="text-[#000000] text-[14px] font-[400]" id="minTemp"></p>
+													<p class="text-[#000000] text-[14px] font-[400]" id="maxTemp"></p>
+												</div>
+											</div>
+											<div id="weather" class="text-lg font-bold text-black"></div>
+											<div class="">
+												<h2 class="font-bold text-[40px] text-black text-left mt-10">Dénivelé</h2>
+												<div id="elevationContainer" class="w-full" style="display: none">
+													<canvas id="elevation" height="0"></canvas>
+												</div>
+											</div>
+											<h2 class="font-bold text-[40px] text-black text-left mt-10">Avis</h2>
+											{% if post.comments is not empty %}
+												{% set ratings = post.ratingStats.ratings %}
+												{% set totalReviews = post.ratingStats.totalReviews %}
+												{% set average = post.ratingStats.average %}
+
+												<div class="flex items-center justify-between max-w-3xl mb-6">
+													<div class="w-1/2 pr-4">
+														{% for i in 5..1 %}
+															{% set percentage = totalReviews > 0 and ratings[i] is defined ? (ratings[i] / totalReviews * 100)|round(1) : 0 %}
+															<div class="flex items-center mb-2">
+																<span class="w-4 mr-2 text-gray-700">{{ i }}</span>
+																<span class="text-green-500">★</span>
+																<div class="w-full ml-2 bg-gray-200 rounded-full h-2.5">
+																	<div class="bg-green-200 h-2.5 rounded-full" style="width: {{ percentage }}%"></div>
+																</div>
+															</div>
+														{% endfor %}
+													</div>
+
+													<div class="w-1/2 flex flex-col items-end">
+														<div class="text-7xl font-bold text-[#121212]">{{ average|number_format(1, ',', ' ') }}</div>
+														<div class="text-green-500 text-lg mb-1">
+															{% for i in 1..5 %}
+																{% if i <= average %}
+																	★
+																{% else %}
+																	☆
+																{% endif %}
+															{% endfor %}
+														</div>
+														<div class="text-gray-600 text-sm">{{ totalReviews }}
+															avis</div>
+													</div>
+												</div>
+											{% endif %}
+
+											<div class="review-button-container">
+												<button id="review-btn-{{ post.id }}" class="text-left w-[400px] mt-[10px] green-gradiant text-white rounded-[50px] h-[30px] flex items-center justify-center" data-itinerary-id="{{ post.id }}">
+													Laisser un avis
+												</button>
+
+												{% if app.user %}
+													<div id="review-form-container-{{ post.id }}" class="hidden"></div>
+												{% else %}
+													<p class="text-black mt-5 text-left">Vous devez être connecté pour laisser un avis.
+														<a class="text-green" href="{{ path('app_login') }}">Se connecter</a>
+													</p>
+												{% endif %}
+
+												<ul class="mt-10 space-y-8">
+													{% if post.comments is not empty %}
+														{% for comment in post.comments %}
+															<li class="pl-5">
+																<div class="flex text-left justify-between mb-2">
+																	<div class="flex items-center min-w-[300px]">
+																		<img src="{{ comment.user.profilePicture }}" alt="Photo de profil" class="w-12 h-12 rounded-full mr-3">
+																		<div class="font-bold text-black">{{ comment.user.firstName }}
+																			.{{ comment.user.lastName|slice(0, 1) }}</div>
+																	</div>
+																	<div class="w-full">
+																		<div class="border-l-4 border-black">
+																			<div class="ml-5">
+																				<div class="text-gray-700 text-sm mb-1">{{ comment.date|date('d/m/Y') }}</div>
+																				<div class="flex gap-5 text-green-500 mr-2">
+																					{% for i in 1..5 %}
+																						{% if i <= comment.rating %}
+																							★
+																						{% else %}
+																							☆
+																						{% endif %}
+																					{% endfor %}
+																					<p class="font-bold text-black">{{ comment.title }}</p>
+																				</div>
+																				<div class="text-[#121212]">{{ comment.message }}</div>
+																			</div>
+																		</div>
+																	</div>
+																</div>
+															</li>
+														{% endfor %}
+													{% else %}
+														<li class="text-gray-700">Aucun commentaire.</li>
+													{% endif %}
+												</ul>
+											</div>
+										</div>
+									</div>
+								</li>
+							{% endfor %}
+						</ul>
+					{% else %}
+						<p class="text-black">Saisissez une Ville, une region ...
+						</p>
+					{% endif %}
+
+				</div>
+			</section>
+
+			<section class="h-full w-full relative aspect-square lg:aspect-auto mb-[30px] lg:mb-0">
+				<section class="w-full rounded-[15px] aspect-square lg:aspect-auto lg:h-[calc(100vh-82px-24px)]" id="carte"></section>
+				<div class="absolute top-[0] p-[12px] flex flex-col gap-[10px] items-center">
+					<img src="{{ asset('img/azure_black.svg') }}" alt="Logo" class="w-[40px] h-[40px] hover:scale-90 transition duration-300 cursor-pointer">
+
+					<button id="mapZoomIn" class="w-[50px] h-[50px] rounded-full black-gradiant text-white flex justify-center items-center opacity-[.6] cursor-pointer hover:scale-[.96] hover:opacity-100 transition duration-300">
+						<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewbox="0 0 24 24" fill="none">
+							<path d="M5 12H19M12 5V19" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+						</svg>
+					</button>
+					<button id="mapZoomOut" class="w-[50px] h-[50px] rounded-full black-gradiant text-white flex justify-center items-center opacity-[.6] cursor-pointer hover:scale-[.96] hover:opacity-100 transition duration-300">
+						<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewbox="0 0 24 24" fill="none">
+							<path d="M5 12H19" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+						</svg>
+					</button>
+				</div>
+			</section>
+		</main>
+
+	</div>
+
+{% endblock %}
+
+{% block javascripts %} <script type="module" src="{{ asset('scripts/posts_list.js') }}"></script>
+	 <script type="module" src="{{ asset('scripts/utils/FullWidthPost.js') }}"></script>
+	 <script src="{{ asset('scripts/avis.js') }}"></script>
+	 <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDsRQNVaLvck3Jhk-LqJqfkUY6cpKOA-3c&callback=initMap&loading=async"></script>
+{% endblock %}

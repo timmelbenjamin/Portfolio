@@ -1,0 +1,220 @@
+@import "tailwindcss";
+@import url("font.css");
+
+body {
+  font-family: "SF Pro Display", sans-serif;
+}
+
+textarea:focus {
+  outline: none;
+}
+
+select:focus {
+  outline: none;
+}
+
+.text-green {
+  color: #63f679;
+}
+
+.input-form {
+  border: 1px solid #dfdfdf;
+  height: 46px;
+  padding: 0px 30px;
+  border-radius: 5px;
+}
+
+.input-form {
+  border: 1px, #dfdfdf, solid;
+  height: 46px;
+  padding: 0px 30px;
+  border-radius: 5px;
+}
+
+.input-form::placeholder {
+  color: #a4a4a4;
+}
+
+.greenBtn {
+  background: var(
+    --green-gradiant,
+    linear-gradient(93deg, #63f679 2.26%, #3fbb52 103.09%)
+  );
+  color: white;
+  border-radius: 5px;
+  height: 46px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all ease 0.3s;
+  cursor: pointer;
+}
+
+.greenBtn:hover {
+  scale: 0.97;
+  transition: all ease 0.3s;
+}
+
+.greenBtn-activity{
+    background: var(--green-gradiant, linear-gradient(93deg, #63F679 2.26%, #3FBB52 103.09%));
+    color: white;
+}
+
+.green-gradiant{
+    background: var(--green-gradiant, linear-gradient(93deg, #63F679 2.26%, #3FBB52 103.09%));
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  transition: background-color 5000s ease-in-out 0s;
+  box-shadow: inset 0 0 20px 20px #ffffff;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+input:focus {
+  outline: none;
+}
+
+.bg-hover-zoom {
+  background-size: 100%;
+  transition: all ease-in-out 0.3s;
+  background-position: center;
+  filter: blur(10%);
+}
+.bg-hover-zoom:hover {
+  background-size: 107%;
+  transition: all ease-in-out 0.3s;
+}
+
+.bg-green-gradient {
+  background: linear-gradient(93deg, #63f679 2.26%, #3fbb52 103.09%);
+}
+
+.bg-black-gradient {
+  background: var(
+    --Black-gradiant,
+    linear-gradient(92deg, #121212 1.39%, #212121 97.12%)
+  );
+}
+
+.img-head {
+  background-image: url("https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80");
+}
+
+.border_box {
+  box-shadow: rgba(99, 246, 121, 0.4) 5px 5px, rgba(99, 246, 121, 0.3) 10px 10px,
+    rgba(99, 246, 121, 0.2) 15px 15px, rgba(99, 246, 121, 0.1) 20px 20px,
+    rgba(99, 246, 121, 0.05) 25px 25px;
+  transition: all ease-in 0.3s;
+}
+
+.innerzoom img {
+  transition: 0.3s ease-in-out;
+}
+
+.innerzoom:hover img {
+  scale: 1.3;
+  transition: 0.3s ease-in-out;
+}
+
+input:focus {
+  outline: none;
+}
+
+input[type="file"]::-webkit-file-upload-button {
+  visibility: hidden;
+}
+
+.svg-hover svg {
+  color: #121212;
+  transition: all 0.8s ease;
+}
+
+.svg-hover:hover svg {
+  color: #63f679;
+  transition: all 0.4s ease;
+  scale: 1.1;
+}
+
+.black-gradiant {
+  background: var(
+    --Black-gradiant,
+    linear-gradient(92deg, #121212 1.39%, #212121 97.12%)
+  );
+}
+
+.smallWidthItem{
+    display: flex;
+    flex-direction: row;
+}
+
+.smallWidthItem > div {
+    max-width: 400px;
+    width: 100%;
+}
+
+.fullWidthItem{
+    display: flex;
+    flex-direction: column;
+}
+
+.smallWidthItem > div {
+    max-width: none;
+    width: 100%;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar {
+  scrollbar-width: none; /* Cache la scrollbar sur Firefox */
+  -ms-overflow-style: none; /* Cache la scrollbar sur Internet Explorer */
+}
+
+.selected{
+  background: var(--green-gradiant, linear-gradient(93deg, #63F679 2.26%, #3FBB52 103.09%));
+  border: none;
+  transition: all ease .3s;
+  font-weight: 500;
+}
+
+.selected > svg > path{
+  fill: white;
+}
+
+.activityButton {
+  background-color: #ffffff;
+}
+
+.selected p{
+  color: #ffffff;
+}
+
+.greenBtn {
+    background: var(--green-gradiant, linear-gradient(93deg, #63F679 2.26%, #3FBB52 103.09%));
+    color: white;
+    border-radius: 5px;
+    height: 46px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all ease .3s;
+    cursor: pointer;
+}
+
+.redBtn {
+    background: red;
+    color: white;
+    border-radius: 5px;
+    height: 46px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all ease .3s;
+    cursor: pointer;
+}

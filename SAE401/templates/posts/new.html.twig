@@ -1,0 +1,127 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Posts
+{% endblock %}
+
+{% block body %}
+	<div id="app" class="lg:max-h-[100vh] lg:h-[100vh]">
+		<header class="h-[82px]">
+			<nav class="flex justify-between items-center px-[100px] py-[25px] de">
+				<a href="{{ path('home') }}" class="flex items-center gap-2">
+					<img src="{{ asset('img/azure_black.svg') }}" alt="Logo" class="w-8 h-8">
+					<span class="text-black text-xl font-bold">Azure</span>
+				</a>
+				{% if app.user %}
+					<a href="{{path('profil')}}">
+						<svg xmlns="http://www.w3.org/2000/svg" width="20" height="23" viewbox="0 0 20 23" fill="none">
+							<path d="M10 12.6111C13.1066 12.6111 15.625 10.1238 15.625 7.05556C15.625 3.98731 13.1066 1.5 10 1.5C6.8934 1.5 4.375 3.98731 4.375 7.05556C4.375 10.1238 6.8934 12.6111 10 12.6111ZM10 12.6111C12.3869 12.6111 14.6761 13.5476 16.364 15.2146C18.0518 16.8816 19 19.1425 19 21.5M10 12.6111C7.61305 12.6111 5.32387 13.5476 3.63604 15.2146C1.94821 16.8816 1 19.1425 1 21.5" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+						</svg>
+					</a>
+				{% else %}
+					<a href="{{path('app_login')}}">Se connecter</a>
+				{% endif %}
+			</nav>
+		</header>
+		<main class="flex flex-col-reverse lg:flex-row max-h-full lg:max-h-[calc(100vh-82px)] h-full p-[12px] lg:overflow-hidden gap-[20px] lg:gap-0">
+			<section class="flex w-full lg:max-w-[600px] h-full lg:px-[75px] flex-col">
+				{{ form_start(form, { 'attr': { 'class' : 'flex flex-col gap-[20px] h-full'}}) }}
+				<div class="lg:max-h-[calc(100vh-82px-24px-66px)] lg:overflow-y-auto no-scrollbar">
+					<div class="relative flex justify-center items-center w-full h-[200px] svg-hover cursor-pointer">
+						{{ form_row(form.gpxFile, { 'row_attr': { 'class': 'flex h-full w-full border border-dashed border-[#8A8A8A55] border-[2px] rounded-[15px] z-999 text-transparent cursor-pointer' }, 'attr': { 'class' : 'w-full cursor-pointer'} , 'label': false }) }}
+						<div class="absolute flex flex-col items-center gap-[5px] cursor-pointer">
+							<svg xmlns="http://www.w3.org/2000/svg" width="36" height="30" viewbox="0 0 36 30" fill="none z-0">
+								<path d="M26.9628 7.71362C26.4662 7.6146 26.0596 7.30405 25.8496 6.85997C23.5242 1.95262 18.1337 -0.791359 12.7463 0.201813C7.83744 1.10197 3.98927 5.02065 3.16862 9.95501C2.92558 11.4118 2.94358 12.87 3.21813 14.2908C3.30815 14.7543 3.10861 15.2704 2.69904 15.6425C0.981242 17.2043 -0.00292969 19.4292 -0.00292969 21.7486C-0.00292969 26.2974 3.69821 30 8.24851 30H24.7514C30.9565 30 36.0033 24.9531 36.0033 18.748C36.0033 13.3996 32.2017 8.7578 26.9628 7.71362ZM22.6825 17.5583C22.39 17.8509 22.0059 17.9979 21.6218 17.9979C21.2378 17.9979 20.8537 17.8509 20.5612 17.5583L18.0002 14.9974V22.4987C18.0002 23.3283 17.3281 23.999 16.4999 23.999C15.6718 23.999 14.9997 23.3283 14.9997 22.4987V14.9974L12.4387 17.5583C11.8521 18.1449 10.904 18.1449 10.3174 17.5583C9.73077 16.9717 9.73077 16.0236 10.3174 15.437L14.3786 11.3758C14.9577 10.7967 15.7183 10.5056 16.4789 10.5011L16.4999 10.4966L16.5209 10.5011C17.2831 10.5056 18.0422 10.7967 18.6213 11.3758L22.6825 15.437C23.2691 16.0236 23.2691 16.9717 22.6825 17.5583Z" fill="currentColor"/>
+							</svg>
+							<div class="" id="emptyDropArea">
+								<p class="text-[16px] font-[500]">Déposez le fichier de votre
+									<span class="text-[#63F679] font-[700]">tracé</span>
+								</p>
+								<p class="text-[14px] font-[300] text-[#A4A4A4] text-center">Supporte les fichiers gpx
+								</p>
+							</div>
+							<div id="filledDropArea" class="flex-col" style="display : none">
+								<p class="text-[16px] font-[500]">Fichier téléchargé avec
+									<span class="text-[#63F679] font-[700]">succès</span>
+								</p>
+								<p class="text-[14px] font-[300] text-[#A4A4A4] text-center"></p>
+							</div>
+						</div>
+					</div>
+					<div class="flex flex-col gap-[20px] mt-[20px]">
+						<div id="elevationContainer" class="w-full" style="display: none">
+							<canvas id="elevation" width="400" height="0"></canvas>
+						</div>
+						{{ form_row(form.title, { 'attr': { 'class' : 'input-form w-full'} , 'label': false }) }}
+						{{ form_row(form.region, { 'attr': { 'class' : 'input-form w-full'} , 'label': false }) }}
+						{{ form_row(form.city, { 'attr': { 'class' : 'input-form w-full'} , 'label': false }) }}
+						{{ form_row(form.activity, { 'attr': { 'class' : 'input-form w-full'} , 'label': false }) }}
+						{{ form_row(form.difficulty, { 'attr': { 'class' : 'input-form w-full'} , 'label': false }) }}
+						<div class="relative flex justify-center items-center w-full lg:w-[450px] h-[200px] svg-hover cursor-pointer">
+							{{ form_row(form.images, { 'row_attr': { 'class': 'flex h-full w-full border border-dashed border-[#8A8A8A55] border-[2px] rounded-[15px] z-999 text-transparent cursor-pointer' }, 'attr': { 'class' : 'w-full cursor-pointer'} , 'label': false }) }}
+							<div class="absolute flex flex-col items-center gap-[5px] cursor-pointer">
+								<svg xmlns="http://www.w3.org/2000/svg" width="36" height="30" viewbox="0 0 36 30" fill="none z-0">
+									<path d="M26.9628 7.71362C26.4662 7.6146 26.0596 7.30405 25.8496 6.85997C23.5242 1.95262 18.1337 -0.791359 12.7463 0.201813C7.83744 1.10197 3.98927 5.02065 3.16862 9.95501C2.92558 11.4118 2.94358 12.87 3.21813 14.2908C3.30815 14.7543 3.10861 15.2704 2.69904 15.6425C0.981242 17.2043 -0.00292969 19.4292 -0.00292969 21.7486C-0.00292969 26.2974 3.69821 30 8.24851 30H24.7514C30.9565 30 36.0033 24.9531 36.0033 18.748C36.0033 13.3996 32.2017 8.7578 26.9628 7.71362ZM22.6825 17.5583C22.39 17.8509 22.0059 17.9979 21.6218 17.9979C21.2378 17.9979 20.8537 17.8509 20.5612 17.5583L18.0002 14.9974V22.4987C18.0002 23.3283 17.3281 23.999 16.4999 23.999C15.6718 23.999 14.9997 23.3283 14.9997 22.4987V14.9974L12.4387 17.5583C11.8521 18.1449 10.904 18.1449 10.3174 17.5583C9.73077 16.9717 9.73077 16.0236 10.3174 15.437L14.3786 11.3758C14.9577 10.7967 15.7183 10.5056 16.4789 10.5011L16.4999 10.4966L16.5209 10.5011C17.2831 10.5056 18.0422 10.7967 18.6213 11.3758L22.6825 15.437C23.2691 16.0236 23.2691 16.9717 22.6825 17.5583Z" fill="currentColor"/>
+								</svg>
+								<div class="" id="emptyDropArea">
+									<p class="text-[16px] font-[500]">Déposez des photos du
+										<span class="text-[#63F679] font-[700]">tracé</span>
+									</p>
+									<p class="text-[14px] font-[300] text-[#A4A4A4] text-center">Supporte les fichiers .jpg .png .webp
+									</p>
+								</div>
+								<div id="filledDropArea" class="flex-col" style="display : none">
+									<p class="text-[16px] font-[500]">Fichier téléchargé avec
+										<span class="text-[#63F679] font-[700]">succès</span>
+									</p>
+									<p class="text-[14px] font-[300] text-[#A4A4A4] text-center"></p>
+								</div>
+							</div>
+						</div>
+						{{ form_row(form.description, { 'attr': { 'class' : ' flex w-full py-[13px] px-[30px] border border-[#DFDFDF] h-[145px] resize-none rounded-[5px]'} , 'label': false }) }}
+						{% if form.is_certified is defined %}
+							<div class="flex items-center w-full justify-start">
+								<div class="flex items-center gap-[10px]">
+									{{ form_widget(form.is_certified, { 'attr': { 'class': 'hidden peer' } }) }}
+									<label for="posts_is_certified" class="relative flex items-center justify-center p-1 peer-checked:before:hidden before:block before:absolute before:w-full before:h-full before:bg-white w-6 h-6 cursor-pointer border-2 border-green-500 rounded-md overflow-hidden">
+										<svg xmlns="http://www.w3.org/2000/svg" class="w-full fill-green-500" viewbox="0 0 520 520">
+											<path d="M79.423 240.755a47.529 47.529 0 0 0-36.737 77.522l120.73 147.894a43.136 43.136 0 0 0 36.066 16.009c14.654-.787 27.884-8.626 36.319-21.515L486.588 56.773a6.13 6.13 0 0 1 .128-.2c2.353-3.613 1.59-10.773-3.267-15.271a13.321 13.321 0 0 0-19.362 1.343q-.135.166-.278.327L210.887 328.736a10.961 10.961 0 0 1-15.585.843l-83.94-76.386a47.319 47.319 0 0 0-31.939-12.438z" data-name="7-Check" data-original="#000000"/>
+										</svg>
+									</label>
+									<p>Je souhaite certifier ce tracé</p>
+
+								</div>
+							</div>
+						{% endif %}
+					</div>
+
+				</div>
+				<button type="submit" class="greenBtn">Publier mon tracé</button>
+
+				{{ form_end(form) }}
+
+			</section>
+			<section class="h-full w-full relative aspect-square lg:aspect-auto lg:mb-0">
+				<section class="w-full rounded-[15px] h-full lg:h-[calc(100vh-82px-24px)]" id="carte"></section>
+				<div class="absolute top-[0] p-[12px] flex flex-col gap-[10px] items-center">
+					<img src="{{ asset('img/azure_black.svg') }}" alt="Logo" class="w-[40px] h-[40px] hover:scale-90 transition duration-300 cursor-pointer">
+
+					<button id="mapZoomIn" class="w-[50px] h-[50px] rounded-full black-gradiant text-white flex justify-center items-center opacity-[.6] cursor-pointer hover:scale-[.96] hover:opacity-100 transition duration-300">
+						<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewbox="0 0 24 24" fill="none">
+							<path d="M5 12H19M12 5V19" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+						</svg>
+					</button>
+					<button id="mapZoomOut" class="w-[50px] h-[50px] rounded-full black-gradiant text-white flex justify-center items-center opacity-[.6] cursor-pointer hover:scale-[.96] hover:opacity-100 transition duration-300">
+						<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewbox="0 0 24 24" fill="none">
+							<path d="M5 12H19" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+						</svg>
+					</button>
+				</div>
+			</section>
+		</main>
+	</div>
+{% endblock %}
+
+{% block javascripts %} <script type="module" src="{{ asset('scripts/posts.js') }}"></script>
+	 <script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDsRQNVaLvck3Jhk-LqJqfkUY6cpKOA-3c&callback=initMap&loading=async"></script>
+
+{% endblock %}

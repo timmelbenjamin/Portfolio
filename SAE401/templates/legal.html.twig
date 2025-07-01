@@ -1,0 +1,99 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Azure
+{% endblock %}
+
+{% block body %}
+	<header class="h-[82px]">
+		<nav class="flex justify-between items-center px-[100px] py-[25px] de">
+			<a href="{{ path('home') }}" class="flex items-center gap-2">
+				<img src="{{ asset('img/azure_black.svg') }}" alt="Logo" class="w-8 h-8">
+				<span class="text-black text-xl font-bold">Azure</span>
+			</a>
+			{% if app.user %}
+				<a href="{{path('profil')}}">
+					<svg xmlns="http://www.w3.org/2000/svg" width="20" height="23" viewbox="0 0 20 23" fill="none">
+						<path d="M10 12.6111C13.1066 12.6111 15.625 10.1238 15.625 7.05556C15.625 3.98731 13.1066 1.5 10 1.5C6.8934 1.5 4.375 3.98731 4.375 7.05556C4.375 10.1238 6.8934 12.6111 10 12.6111ZM10 12.6111C12.3869 12.6111 14.6761 13.5476 16.364 15.2146C18.0518 16.8816 19 19.1425 19 21.5M10 12.6111C7.61305 12.6111 5.32387 13.5476 3.63604 15.2146C1.94821 16.8816 1 19.1425 1 21.5" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+					</svg>
+				</a>
+			{% else %}
+				<a href="{{path('app_login')}}">Se connecter</a>
+			{% endif %}
+		</nav>
+	</header>
+	<main class="flex flex-col py-[50px] max-w-[1280px] m-auto px-[40px] gap-[35px]">
+		<h1 class="text-[42px] font-[600]">Conditions Générales d'Utilisation et Protection des Données</h1>
+		<div class="flex flex-col gap-[10px]">
+			<h2 class="text-[22px] font-[500]">1. Préambule</h2>
+			<p class="text-[18px]">Ce document décrit les modalités de collecte, de stockage et d'utilisation des données personnelles des utilisateurs conformément au Règlement Général sur la Protection des Données (RGPD - Règlement UE 2016/679).</p>
+		</div>
+		<div class="flex flex-col gap-[10px]">
+			<h2 class="text-[22px] font-[500]">2. Données collectées</h2>
+			<p class="text-[18px]">Nous collectons les données suivantes lorsque vous utilisez notre service :</p>
+			<ul class="list-disc pl-[40px]">
+				<li>Données d'identification : Nom, prénom, adresse e-mail, diplome (guide).</li>
+				<li>Données de connexion : Adresse IP, type d'appareil, navigateur utilisé.</li>
+				<li>Données de navigation : Pages consultées, temps passé sur le site.</li>
+			</ul>
+		</div>
+		<div class="flex flex-col gap-[10px]">
+			<h2 class="text-[22px] font-[500]">3. Finalités du traitement des données</h2>
+			<p class="text-[18px]">Nous collectons les données suivantes lorsque vous utilisez notre service :</p>
+			<ul class="list-disc pl-[40px]">
+				<li>Gérer votre compte utilisateur et votre authentification.</li>
+				<li>Fournir les services demandés.</li>
+				<li>Améliorer l'expérience utilisateur et la sécurité du site.</li>
+				<li>Respecter les obligations légales et réglementaires.</li>
+			</ul>
+		</div>
+		<div class="flex flex-col gap-[10px]">
+			<h2 class="text-[22px] font-[500]">4. Stockage et durée de conservation des données</h2>
+			<p class="text-[18px]">Les données personnelles sont stockées sur des serveurs sécurisés situés au sein de l'Union Européenne. Nous mettons en place des mesures techniques et organisationnelles pour protéger vos données.</p>
+			<ul class="list-disc pl-[40px]">
+				<li>Les données sont conservées tant que votre compte est actif.</li>
+				<li>Les données d'identification sont supprimées dans un délai de 3 ans après la dernière activité.</li>
+				<li>Les données liées à des obligations légales (facturation, comptabilité) sont conservées pendant 10 ans.</li>
+			</ul>
+		</div>
+		<div class="flex flex-col gap-[10px]">
+			<h2 class="text-[22px] font-[500]">5. Partage des données</h2>
+			<p class="text-[18px]">Vos données peuvent être partagées uniquement avec :</p>
+			<ul class="list-disc pl-[40px]">
+				<li>Nos sous-traitants techniques (hébergeurs, prestataires de paiement) conformes au RGPD.</li>
+				<li>Les autorités publiques si la loi l'exige. Nous ne vendons ni ne louons vos données à des tiers.</li>
+			</ul>
+		</div>
+		<div class="flex flex-col gap-[10px]">
+			<h2 class="text-[22px] font-[500]">6. Vos droits</h2>
+			<p class="text-[18px]">Conformément au RGPD, vous disposez des droits suivants sur vos données personnelles :</p>
+			<ul class="list-disc pl-[40px]">
+				<li>Droit d'accès : Vous pouvez demander à voir les données que nous possédons sur vous.</li>
+				<li>Droit de rectification : Vous pouvez demander à modifier des informations incorrectes.</li>
+				<li>Droit à l'effacement : Vous pouvez demander la suppression de vos données sous certaines conditions.</li>
+				<li>Droit à la portabilité : Vous pouvez demander à recevoir vos données dans un format exploitable.</li>
+				<li>Droit à la limitation du traitement de vos données.</li>
+			</ul>
+			<p class="text-[18px]">Pour exercer ces droits, contactez-nous à legal@azure.fr.</p>
+		</div>
+		<div class="flex flex-col gap-[10px]">
+			<h2 class="text-[22px] font-[500]">7. Sécurité des données</h2>
+			<p class="text-[18px]">Nous utilisons des mesures de sécurité avancées :</p>
+			<ul class="list-disc pl-[40px]">
+				<li>Chiffrement des données sensibles.</li>
+				<li>Protocoles HTTPS et pare-feu.</li>
+				<li>Accès restreints aux données aux seules personnes autorisées.</li>
+			</ul>
+		</div>
+
+		<div class="flex flex-col gap-[10px]">
+			<h2 class="text-[22px] font-[500]">8. Modification des conditions</h2>
+			<p class="text-[18px]">Nous nous réservons le droit de modifier ces conditions à tout moment. Les modifications seront publiées sur cette page.</p>
+		</div>
+
+	</div>
+	<div class="flex flex-col gap-[10px]">
+		<h2 class="text-[22px] font-[500]">9. Contact</h2>
+		<p class="text-[18px]">Pour toute question concernant vos données personnelles, vous pouvez nous contacter à legal@azure.fr</p>
+	</div>
+</main>
+{% include 'footer.html.twig' %}{% endblock %}{% block javascripts %}{% endblock %}

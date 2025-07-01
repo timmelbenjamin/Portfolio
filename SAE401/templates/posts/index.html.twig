@@ -1,0 +1,31 @@
+{% extends 'admin/admin_base.twig' %}
+
+{% block title %}Posts index
+{% endblock %}
+
+{% block body %}
+	<h1 class="text-center font-[600] text-[48px]">Tous les posts</h1>
+	<main class="w-full flex justify-center">
+		<section class="flex flex-col w-fit gap-[10px]">
+			{% for post in posts %}
+				<div class="flex gap-[10px] hover:bg-emerald-100 transition py-[10px] px-[20px] items-center">
+					<p class="w-[50px]">{{ post.id }}</p>
+					<p class="w-[200px] truncate whitespace-nowrap overflow-hidden text-ellipsis">{{ post.user.email }}</p>
+					<p class="w-[150px] truncate whitespace-nowrap overflow-hidden text-ellipsis">{{ post.title }}</p>
+					<p class="w-[400px] truncate whitespace-nowrap overflow-hidden text-ellipsis">{{ post.description }}</p>
+					<p class="w-[200px] truncate whitespace-nowrap overflow-hidden text-ellipsis">{{ post.region }}</p>
+					<p class="w-[200px] truncate whitespace-nowrap overflow-hidden text-ellipsis">{{ post.city }}</p>
+					<div class="flex gap-[20px]">
+						<a class="greenBtn px-[20px] max-h-[30px]" href="{{ path('app_posts_show', {'id': post.id}) }}">Voir</a>
+						<a class="black-gradiant flex items-center text-white rounded-[5px] px-[20px] hover:scale-95 transition duration-300 max-h-[30px]" href="{{ path('app_posts_edit', {'id': post.id}) }}">Modifier</a>
+					</div>
+				</div>
+			{% else %}
+				<div>
+					<p>Aucun posts trouvés</p>
+				<div>
+			{% endfor %}
+		</section>
+	</main>
+
+{% endblock %}

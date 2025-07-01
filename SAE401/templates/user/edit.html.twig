@@ -1,0 +1,63 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier mon profil{% endblock %}
+
+{% block body %}
+    <main class="max-h-[100vh] h-[100vh] overflow-hidden flex justify-between p-[12px]">
+
+        <section class="flex h-full w-full items-center justify-center">
+            <section class="w-[400px]">
+                <div class="flex gap-[15px] w-full justify-center pb-[30px]">
+                    <img src="{{ asset('img/azure_black.svg') }}" alt="Logo">
+                    <h1 class="font-Kamerik105 font-[700] text-[24px] text-[#121212]">Azure</h1>
+                </div>
+
+                <div class="w-full pb-[20px]">
+                    <h2 class="font-sf-pro-display font-[600] text-[24px]">Modifier mon profil</h2>
+                    <p class="text-[14px]">Retourner à
+                        <a class="text-green" href="{{ path('profil') }}">Mon profil</a>
+                    </p>
+                </div>
+
+                {{ form_errors(form) }}
+                {{ form_start(form) }}
+
+                <div class="flex flex-col gap-[15px]">
+                    {{ form_row(form.username, { 'attr': {'class': 'input-form w-[400px]'} }) }}
+                    {{ form_row(form.email, { 'attr': {'class': 'input-form w-[400px]'} }) }}
+
+                    <div class="flex flex-col gap-[5px]">
+                        {{ form_label(form.plainPassword.first, 'Nouveau mot de passe', {'attr': {'class': 'input-form w-[400px]'}}) }}
+                        {{ form_widget(form.plainPassword.first, { 'attr': {'class': 'input-form w-[400px]'} }) }}
+                        <p class="text-[12px] text-[#A4A4A4]">Laissez vide pour conserver votre mot de passe actuel</p>
+                    </div>
+
+                    <div class="flex flex-col gap-[5px">
+                        {{ form_label(form.plainPassword.second, 'Confirmer le mot de passe', {'attr': {'class': 'input-form w-[400px]'}}) }}
+                        {{ form_widget(form.plainPassword.second, { 'attr': {'class': 'input-form w-[400px]'} }) }}
+                    </div>
+                </div>
+
+                <button type="submit" class="greenBtn w-full mt-[40px]">Enregistrer les modifications</button>
+
+                {{ form_end(form) }}
+
+                <div class="mt-[40px] pt-[20px] border-t border-gray-200">
+                    <h2 class="font-sf-pro-display font-[600] text-[18px] text-red-600 mb-[10px]">Supprimer mon compte</h2>
+                    <p class="text-[14px] text-[#A4A4A4] mb-[15px]">Attention : cette action est irréversible. Toutes vos données seront définitivement supprimées.</p>
+
+                    <form action="{{ path('profil_delete_account') }}" method="post" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer votre compte ? Cette action est irréversible.')">
+                        <input type="hidden" name="_token" value="{{ csrf_token('delete-account' ~ user.id) }}">
+                        <button type="submit" class="px-4 py-2 bg-red-600 text-white font-medium rounded-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 w-full">
+                            Supprimer mon compte
+                        </button>
+                    </form>
+                </div>
+            </section>
+        </section>
+
+        <section class="h-full min-w-fit">
+            <img class="h-full w-full object-contain rounded-[15px]" src="{{ asset('img/auth_picture.png') }}" alt="Montagne">
+        </section>
+    </main>
+{% endblock %}

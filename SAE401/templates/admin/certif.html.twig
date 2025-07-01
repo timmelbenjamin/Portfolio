@@ -1,0 +1,28 @@
+{% extends 'admin/admin_base.twig' %}
+
+{% block title %}Azure - Admin
+
+{% endblock %}
+
+{% block body %}
+	<h1 class="text-center font-[600] text-[48px]">Demande de certification</h1>
+	<main class="w-full flex justify-center">
+
+		<section class="flex flex-col w-fit gap-[10px]">
+
+			{% for ask in certif %}
+				<form action="{{ path('admin_certif_valid', {'id': ask.id}) }}">
+					<div class="flex gap-[10px] hover:bg-emerald-100 transition py-[10px] px-[20px] items-center">
+						<p class="w-[130px] truncate whitespace-nowrap overflow-hidden text-ellipsis">{{ask.user.lastName}}</p>
+						<p class="w-[130px] truncate whitespace-nowrap overflow-hidden text-ellipsis">{{ask.user.firstName}}</p>
+						<p class="w-[130px] truncate whitespace-nowrap overflow-hidden text-ellipsis">{{ask.user.username}}</p>
+						<p class="w-[250px] truncate whitespace-nowrap overflow-hidden text-ellipsis">{{ask.user.email}}</p>
+						<a class="black-gradiant flex items-center text-white rounded-[5px] px-[20px] hover:scale-95 transition duration-300 max-h-[30px]" href="{{ asset('degree/' ~ ask.fileName) }}">Voir le diplôme</a>
+						<button class="greenBtn px-[20px] max-h-[30px]" type="Submit">Valider</button>
+					</div>
+				</form>
+			{% endfor %}
+		</section>
+	</main>
+
+{% endblock %}
