@@ -1,0 +1,400 @@
+{% extends 'accueil_visiteurs.twig' %}
+{% block main %} 
+    <main>
+    {% if page == 'bloc' and action == 'read' %}
+        {% if bloc is not null %}
+            <h2>Détails du Bloc</h2>
+            {{ bloc.afficher() }}
+        {% elseif tableau is not null %}
+            {% for bloc in tableau %}
+                {% if bloc.type == "h1" %}
+                    <h1>{{ bloc.texte }}</h1>
+                {% elseif bloc.type == "paragraphe" %}
+                    <p>{{ bloc.texte }}</p>
+                {% elseif bloc.type == "image" %}
+                    <img src="{{ bloc.src }}" alt="{{ bloc.alt }}">
+                {% else %}
+                    <p>Type de bloc inconnu : {{ bloc.type }}</p>
+                {% endif %}
+            {% endfor %}
+        {% else %}
+            <p>Aucun bloc trouvé.</p>
+        {% endif %}
+    {% elseif page == 'bloc' and action == 'create' %}
+        <a href="controleur.php?page=article&action=read&id={{id}}">Retour</a>
+        <h2>Créer un nouveau bloc</h2>
+        <form method="POST" action="controleur.php?page=bloc&action=create">
+            <br>
+            <label for="type">Type:</label>
+            <input type="text" id="type" name="type" required>
+            <br>
+            <label for="texte">Texte:</label>
+            <textarea id="texte" name="texte" required></textarea>
+            <br>
+            <label for="css">CSS:</label>
+            <input id="css" name="css"></input>
+            <br>
+            <label for="src">SRC:</label>
+            <input id="src" name="src"></input>
+            <br>
+            <label for="alt">ALT:</label>
+            <input id="alt" name="alt"></input>
+            <br>
+            <label for="id_article">Article associé:</label>
+            <input type="text" id="id_article" name="id_article" value="{{id}}" required>
+            <br>
+            <input type="submit" value="Créer">
+        </form>
+        {% if message %}
+        <div>{{ message }}</div>
+        {% endif %}
+    {% elseif page == 'bloc' and action == 'delete' %}
+        <a href="controleur.php?page=article&action=read&id={{id_article}}">Retour</a>
+        <h2>Suppression du Bloc</h2>
+        <div>{{ message }}</div>
+    {% elseif page == 'bloc' and action == 'modify' %}
+        <a href="controleur.php?page=article&action=read&id={{bloc.id_article}}">Retour</a>
+        <h2>Modifier le Bloc</h2>
+        {% if bloc is not null %}
+            <form method="POST" action="controleur.php?page=bloc&action=modify&id={{ bloc.id }}">
+                <label for="id">ID:</label>
+                <input type="id" id="id" name="id" value="{{ bloc.id }}" required>
+                <br>
+                <label for="type">Type:</label>
+                <input type="text" id="type" name="type" value="{{ bloc.type }}" required>
+                <br>
+                <label for="texte">Texte:</label>
+                <textarea id="texte" name="texte" required>{{ bloc.texte }}</textarea>
+                <br>
+                <label for="css">CSS:</label>
+                <input type="css" id="css" name="css" value="{{ bloc.css }}">
+                <br>
+                <label for="src">SRC:</label>
+                <input type="text" id="src" name="src" value="{{ bloc.src }}">
+                <br>            
+                <label for="alt">ALT:</label>
+                <input type="text" id="alt" name="alt" value="{{ bloc.alt }}">
+                <br>
+                <label for="id_article">Article associé:</label>
+                <input id="id_article" name="id_article" value="{{bloc.id_article}}" required></input>
+                <br>
+                <input type="submit" value="Modifier">
+            </form>
+            {% if message %}
+            <div>{{ message }}</div>
+            {% endif %}
+        {% else %}
+            <p>Bloc non trouvé.</p>
+        {% endif %}
+
+{#Cours#}
+
+    {% elseif page == 'cours' and action == 'read' %}
+        {% if cours is not null %}
+        <article class="detail">
+            <div>
+                <img src="img/cours/{{cours.image_src}}" alt="{{cours.titre}}">
+            </div>
+            <div class="detail_texte">
+                <div>
+                    <h2>{{cours.titre}}</h2>
+                    <p>Description : {{cours.description}}</p>
+                    <div class="filtre">
+                        <div>{{cours.filtre}}</div>
+                        <div>{{cours.filtre}}</div>
+                    </div>
+                    <p>Le {{cours.date}} pendant {{cours.durée}} heures.</p>
+                    <p>Cours donné par : {{cours.vendeur}}</p>
+                    <p>Prix : {{cours.prix}} €</p>
+                </div>
+                <div class="action">
+                    <button>Réserver le cours</button>
+                    <a href="controleur.php?page=cours&action=read&id_utilisateur={{id_utilisateur}}&role={{role}}">Retour</a>
+                </div>
+            </div>
+        </article>
+        {% elseif tableau is not null %}
+            <h1>Cours</h1>
+            <article class="article_filtres">
+                {% for filtres in tab_filtres %}
+                    <button><a href="controleur.php?page=cours&action=read&id_utilisateur={{id_utilisateur}}&role={{role}}&filtre={{filtres}}">{{filtres}}</a></button>
+                {% endfor %}
+            </article>
+            {% if message is not null %}
+             <h2>{{message}}</h2>
+            {% endif %}
+            <section class="container">
+            {% for cours in tableau %}
+                <article class="cards">
+                    <div>
+                        <img src="img/cours/{{cours.image_src}}" alt="{{cours.titre}}">
+                    </div>
+                    <div>
+                        <h3>{{ cours.titre }}</h3>
+                        <div class="prix">
+                            <p>Prix : {{ cours.prix }} €</p>
+                            <button><a href="controleur.php?page=cours&action=read&id={{cours.id}}&id_utilisateur={{id_utilisateur}}&role={{role}}">Voir plus</a></button>
+                        </div>
+                    </div>
+                </article>
+            {% endfor %}
+        </section>
+        {% else %}
+            <p>Aucun cours trouvé.</p>
+        {% endif %}
+    {% elseif page == 'cours' and action == 'create' %}
+        <a href="controleur.php?page=cours&action=read&id_utilisateur={{id_utilisateur}}&role={{role}}">Retour</a>
+        <h2>Créer un nouveau cours</h2>
+        <form method="POST" action="controleur.php?page=cours&action=create&id_utilisateur={{id_utilisateur}}&role={{role}}">
+            <br>
+            <label for="titre">Titre:</label>
+            <input type="text" id="titre" name="titre" required>
+            <br>
+            <label for="description">Description:</label>
+            <textarea id="description" name="description" required></textarea>
+            <br>
+            <input type="submit" value="Créer">
+        </form>
+        {% if message %}
+        <div>{{ message }}</div>
+        {% endif %}
+    {% elseif page == 'cours' and action == 'delete' %}
+        <a href="controleur.php?page=cours&action=read&id_utilisateur={{id_utilisateur}}&role={{role}}">Retour</a>
+        <h2>Suppression du Cours</h2>
+        <div>{{ message }}</div>
+    {% elseif page == 'cours' and action == 'modify' %}
+        <a href="controleur.php?page=cours&action=read&id={{cours.id}}&id_utilisateur={{id_utilisateur}}&role={{role}}">Retour</a>
+        <h2>Modifier le Cours</h2>
+        {% if cours is not null %}
+            <form method="POST" action="controleur.php?page=cours&action=modify&id={{ cours.id }}&id_utilisateur={{id_utilisateur}}&role={{role}}">
+                <label for="id">ID:</label>
+                <input type="id" id="id" name="id" value="{{ cours.id }}" required>
+                <br>
+                <label for="titre">Titre:</label>
+                <input type="text" id="titre" name="titre" value="{{ cours.titre }}" required>
+                <br>
+                <label for="description">Description:</label>
+                <textarea id="description" name="description" required>{{ cours.description }}</textarea>
+                <br>
+                <input type="submit" value="Modifier">
+            </form>
+            {% if message %}
+            <div>{{ message }}</div>
+            {% endif %}
+        {% else %}
+            <p>Cours non trouvé.</p>
+        {% endif %}
+    
+{#Matériel#}
+
+    {% elseif page == 'materiel' and action == 'read' %}
+        {% if materiel is not null %}
+            <article class="detail">
+                <div>
+                    <img src="img/materiel/{{ materiel.image_src }}" alt="{{materiel.titre}}">
+                </div>
+                <div class="detail_texte">
+                    <div>
+                        <h2>{{materiel.titre}}</h2>
+                        <p>Description : {{materiel.description}}</p>
+                        <div class="filtre">
+                            <div>{{materiel.type}}</div>
+                            <div>{{materiel.filtre}}</div>
+                        </div>
+                    <p>Vendu par : {{materiel.vendeur}}</p>
+                    <p>Prix : {{materiel.prix}} €</p>
+                    </div>
+                    <div class="action">
+                        <button>Réserver l'article</button>
+                        <a href="controleur.php?page=materiel&action=read&id_utilisateur={{id_utilisateur}}&role={{role}}">Retour</a>
+                    </div>
+                </div>
+            </article>
+        {% elseif tableau is not null %}
+            <h1>Matériel</h1>
+            <article class="article_filtres">
+                {% for filtres in tab_filtres %}
+                <button><a href="controleur.php?page=materiel&action=read&filtre={{filtres}}&id_utilisateur={{id_utilisateur}}&role={{role}}">{{filtres}}</a></button>
+                {% endfor %}
+            </article>
+            {% if message is not null %}
+             <h2>{{message}}</h2>
+            {% endif %}
+            <section class="container">
+            {% for materiel in tableau %}
+                <article class="cards">
+                    <div>
+                        <img src="img/materiel/{{ materiel.image_src }}" alt="{{materiel.titre}}">
+                    </div>
+                    <div>
+                        <h3>{{ materiel.titre }}</h3>
+                        <div class="prix">
+                            <p>Prix : {{ materiel.prix }} €</p>
+                            <button><a href="controleur.php?page=materiel&action=read&id={{materiel.id}}&id_utilisateur={{id_utilisateur}}&role={{role}}">Voir plus</a></button>
+                        </div>
+                    </div>
+                </article>
+            {% endfor %}
+            </section>
+        {% else %}
+            <p>Aucun matériel trouvé.</p>
+        {% endif %}
+    {% elseif page == 'materiel' and action == 'create' %}
+        <a href="controleur.php?page=materiel&action=read&id_utilisateur={{id_utilisateur}}&role={{role}}">Retour</a>
+        <h2>Créer un nouveau matériel</h2>
+        <form method="POST" action="controleur.php?page=materiel&action=create&id_utilisateur={{id_utilisateur}}&role={{role}}">
+            <br>
+            <label for="nom">Nom:</label>
+            <input type="text" id="nom" name="nom" required>
+            <br>
+            <label for="description">Description:</label>
+            <textarea id="description" name="description" required></textarea>
+            <br>
+            <input type="submit" value="Créer">
+        </form>
+        {% if message %}
+        <div>{{ message }}</div>
+        {% endif %}
+    {% elseif page == 'materiel' and action == 'delete' %}
+        <a href="controleur.php?page=materiel&action=read&id_utilisateur={{id_utilisateur}}&role={{role}}">Retour</a>
+        <h2>Suppression du Matériel</h2>
+        <div>{{ message }}</div>
+    {% elseif page == 'materiel' and action == 'modify' %}
+        <a href="controleur.php?page=materiel&action=read&id={{materiel.id}}&id_utilisateur={{id_utilisateur}}&role={{role}}">Retour</a>
+        <h2>Modifier le Matériel</h2>
+        {% if materiel is not null %}
+            <form method="POST" action="controleur.php?page=materiel&action=modify&id={{ materiel.id }}&id_utilisateur={{id_utilisateur}}&role={{role}}">
+                <label for="id">ID:</label>
+                <input type="id" id="id" name="id" value="{{ materiel.id }}" required>
+                <input>
+                <br>
+                <label for="nom">Nom:</label>
+                <input type="text" id="nom" name="nom" value="{{ materiel.nom }}" required>
+                <br>
+                <label for="description">Description:</label>
+                <textarea id="description" name="description" required>{{ materiel.description }}</textarea>
+                <br>
+                <input type="submit" value="Modifier">
+            </form>
+            {% if message %}
+            <div>{{ message }}</div>
+            {% endif %}
+        {% else %}
+            <p>Matériel non trouvé.</p>
+        {% endif %}
+
+{# Tuto #}
+
+    {% elseif page == 'tuto' and action == 'read' %}
+        {% if tuto is not null %}
+        <article class="detail">
+            <div>
+                <img src="img/tuto/{{tuto.image_src}}" alt="{{tuto.titre}}">
+            </div>
+            <div class="detail_texte">
+                <div>
+                    <h2>{{tuto.titre}}</h2>
+                    <p>Description : {{tuto.description}}</p>
+                    <div class="filtre">
+                        <div>{{tuto.filtre}}</div>
+                        <div>{{tuto.filtre}}</div>
+                    </div>
+                    <p>Réalisé par : {{tuto.vendeur}}</p>
+                </div>
+                <div class="action">
+                    <a href="controleur.php?page=tuto&action=read&id_utilisateur={{id_utilisateur}}&role={{role}}">Retour</a>
+                </div>
+            </div>
+        </article>
+        <article class="article_tuto">
+            
+                {% if tuto.liste_blocs is not empty %}
+                        <div class="tuto_bloc">
+                            {{tuto.afficherBlocs_visiteurs()}}
+                        </div> 
+                {% elseif tuto.video is not null %}
+                    <div class="tuto_video">
+                        <iframe width="560" height="315" src="https://www.youtube.com/embed/{{tuto.video}}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                    </div>
+                {% else %}
+                        <div class="tuto_video">
+                            <p>Le tuto est en cours de rédaction</p>
+                        </div>
+                    
+                {% endif %}   
+             
+        </article>
+        {% elseif tableau is not null %}
+            <h1>Tutos</h1>
+            <article class="article_filtres">
+                {% for filtres in tab_filtres %}
+                <button><a href="controleur.php?page=tuto&action=read&filtre={{filtres}}&id_utilisateur={{id_utilisateur}}&role={{role}}">{{filtres}}</a></button>
+                {% endfor %}
+            </article>
+            {% if message is not null %}
+             <h2>{{message}}</h2>
+            {% endif %}
+            <section class="container">
+            {% for tuto in tableau %}
+                <article class="cards">
+                    <div>
+                        <img src="img/tuto/{{tuto.image_src}}" alt="{{tuto.titre}}">
+                    </div>
+                    <div>
+                        <h3>{{ tuto.titre }}</h3>
+                        <div class="prix">
+                            <button><a href="controleur.php?page=tuto&action=read&id={{tuto.id}}&id_utilisateur={{id_utilisateur}}&role={{role}}">Voir plus</a></button>
+                        </div>
+                    </div>
+                </article>
+            {% endfor %}
+        </section>
+        {% else %}
+            <p>Aucun tuto trouvé.</p>
+        {% endif %}
+    {% elseif page == 'tuto' and action == 'create' %}
+        <a href="controleur.php?page=tuto&action=read&id_utilisateur={{id_utilisateur}}&role={{role}}">Retour</a>
+        <h2>Créer un nouveau tuto</h2>
+        <form method="POST" action="controleur.php?page=tuto&action=create&id_utilisateur={{id_utilisateur}}&role={{role}}">
+            <br>
+            <label for="titre">Titre:</label>
+            <input type="text" id="titre" name="titre" required>
+            <br>
+            <label for="description">Description:</label>
+            <textarea id="description" name="description" required></textarea>
+            <br>
+            <input type="submit" value="Créer">
+        </form>
+        {% if message %}
+        <h3>{{ message }}</h3>
+        {% endif %}
+    {% elseif page == 'tuto' and action == 'delete' %}
+        <a href="controleur.php?page=tuto&action=read&id_utilisateur={{id_utilisateur}}&role={{role}}">Retour</a>
+        <h2>Suppression du Tuto</h2>
+        <div>{{ message }}</div>
+    {% elseif page == 'tuto' and action == 'modify' %}
+        <a href="controleur.php?page=tuto&action=read&id={{tuto.id}}&id_utilisateur={{id_utilisateur}}&role={{role}}">Retour</a>
+        <h2>Modifier le Tuto</h2>
+        {% if tuto is not null %}
+            <form method="POST" action="controleur.php?page=tuto&action=modify&id={{ tuto.id }}&id_utilisateur={{id_utilisateur}}&role={{role}}">
+                <label for="id">ID:</label>
+                <input type="id" id="id" name="id" value="{{ tuto.id }}" required>
+                <br>
+                <label for="titre">Titre:</label>
+                <input type="text" id="titre" name="titre" value="{{ tuto.titre }}" required>
+                <br>
+                <label for="description">Description:</label>
+                <textarea id="description" name="description" required>{{ tuto.description }}</textarea>
+                <br>
+                <input type="submit" value="Modifier">
+            </form>
+            {% if message %}
+            <div>{{ message }}</div>
+            {% endif %}
+        {% else %}
+            <p>Tuto non trouvé.</p>
+        {% endif %}
+    {% endif %}
+</main> 
+
+{% endblock %}

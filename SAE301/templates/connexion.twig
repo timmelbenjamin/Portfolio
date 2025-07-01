@@ -1,0 +1,128 @@
+{% extends 'accueil.twig' %}
+{% block main %} 
+<main>
+    <section class="deconnexion">
+        <article><button><a href="../connexion.php">Se déconnecter</a></button></article>
+    </section>
+    
+    {% if role == 'pro' %}
+    <h2>Vos articles</h2>
+        <section class="container">        
+            <div class="colonnne-article">
+                <h3 class="h3-centre">Matériel</h3>
+                {% for materiel in  tableau_materiel %}
+                    {% if materiel.id_auteur == id_utilisateur %}
+                        <article class="cards">
+                            <div>
+                                <img src="../img/materiel/{{ materiel.image_src }}" alt="{{materiel.titre}}">
+                            </div>
+                            <div>
+                                <h3>{{ materiel.titre }}</h3>
+                                <div class="prix">
+                                    <p>Prix : {{ materiel.prix }} €</p>
+                                    <button><a href="controleur.php?page=materiel&action=read&id={{materiel.id}}&id_utilisateur={{id_utilisateur}}&role={{role}}">Voir plus</a></button>
+                                </div>
+                            </div>
+                        </article>
+                    {% endif %}
+                {% endfor %}
+            </div>
+            <div class="colonnne-article">
+                <h3 class="h3-centre">Cours</h3>
+                {% for cours in  tableau_cours %}
+                    {% if cours.id_auteur == id_utilisateur %}
+                        <article class="cards">
+                            <div>
+                                <img src="../img/cours/{{cours.image_src}}" alt="{{cours.titre}}">
+                            </div>
+                            <div>
+                                <h3>{{ cours.titre }}</h3>
+                                <div class="prix">
+                                    <p>Prix : {{ cours.prix }} €</p>
+                                    <button><a href="controleur.php?page=cours&action=read&id={{cours.id}}&id_utilisateur={{id_utilisateur}}&role={{role}}">Voir plus</a></button>
+                                </div>
+                            </div>
+                        </article>
+                    {% endif %}
+                {% endfor %}
+            </div>
+            <div class="colonnne-article">
+                <h3 class="h3-centre">Tuto</h3>
+                {% for tuto in  tableau_tuto %}
+                    {% if tuto.id_auteur == id_utilisateur %}
+                        <article class="cards">
+                            <div>
+                                <img src="../img/tuto/{{tuto.image_src}}" alt="{{tuto.titre}}">
+                            </div>
+                            <div>
+                                <h3>{{ tuto.titre }}</h3>
+                                <div class="prix">
+                                    <button><a href="controleur.php?page=tuto&action=read&id={{tuto.id}}&id_utilisateur={{id_utilisateur}}&role={{role}}">Voir plus</a></button>
+                                </div>
+                            </div>
+                        </article>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </section>
+    {% endif %}
+    {% if role == 'admin' %}
+    <h2>Vos articles</h2>
+        <section class="container">        
+            <div class="colonnne-article">
+                <h3 class="h3-centre">Matériel</h3>
+                {% for materiel in  tableau_materiel %}
+                        <article class="cards">
+                            <div>
+                                <img src="../img/materiel/{{ materiel.image_src }}" alt="{{materiel.titre}}">
+                            </div>
+                            <div>
+                                <h3>{{ materiel.titre }}</h3>
+                                <div class="prix">
+                                    <p>Prix : {{ materiel.prix }} €</p>
+                                    <button><a href="controleur.php?page=materiel&action=read&id={{materiel.id}}&id_utilisateur={{id_utilisateur}}&role={{role}}">Voir plus</a></button>
+                                </div>
+                            </div>
+                        </article>
+                    
+                {% endfor %}
+            </div>
+            <div class="colonnne-article">
+                <h3 class="h3-centre">Cours</h3>
+                {% for cours in  tableau_cours %}
+                        <article class="cards">
+                            <div>
+                                <img src="../img/cours/{{cours.image_src}}" alt="{{cours.titre}}">
+                            </div>
+                            <div>
+                                <h3>{{ cours.titre }}</h3>
+                                <div class="prix">
+                                    <p>Prix : {{ cours.prix }} €</p>
+                                    <button><a href="controleur.php?page=cours&action=read&id={{cours.id}}&id_utilisateur={{id_utilisateur}}&role={{role}}">Voir plus</a></button>
+                                </div>
+                            </div>
+                        </article>
+                {% endfor %}
+            </div>
+            <div class="colonnne-article">
+                <h3 class="h3-centre">Tutos</h3>
+                {% for tuto in  tableau_tuto %}
+                        <article class="cards">
+                            <div>
+                                <img src="../img/tuto/{{tuto.image_src}}" alt="{{tuto.titre}}">
+                            </div>
+                            <div>
+                                <h3>{{ tuto.titre }}</h3>
+                                <div class="prix">
+                                    <button><a href="controleur.php?page=tuto&action=read&id={{tuto.id}}&id_utilisateur={{id_utilisateur}}&role={{role}}">Voir plus</a></button>
+                                </div>
+                            </div>
+                        </article>
+                {% endfor %}
+            </div>
+        </section>
+    {% endif %}
+</main>
+
+{% endblock %} 
+

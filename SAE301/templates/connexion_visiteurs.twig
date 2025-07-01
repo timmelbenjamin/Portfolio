@@ -1,0 +1,74 @@
+{% extends 'accueil_visiteurs.twig' %}
+{% block main %} 
+<main class="main_compte">
+    <section>
+        <article class="form">
+            <h2>Connexion</h2>
+            <form action="connexion.php" method="POST">
+                <input type="hidden" name="action" value="login">
+                <div class="form-group">
+                    <label for="email_connexion">Email</label>
+                    <input type="email" class="form-control" id="email_connexion" name="email_connexion" required>
+                </div>
+                <div class="form-group">
+                    <label for="mot_passe_connexion">Mot de passe</label>
+                    <input type="password" class="form-control" id="mot_passe_connexion" name="mot_passe_connexion" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Se connecter</button>
+            </form>
+            {% if message %}
+                <p >{{ message }}</p>
+            {% endif %}
+        </article>
+        <div class="vertical-bar"></div>
+        <article class="form">
+            <h2>Créer un compte</h2>
+            <form action="connexion.php" method="POST">
+                <input type="hidden" name="action" value="register">
+                <div class="form-group">
+                    <label for="nom">Nom</label>
+                    <input type="text" class="form-control" id="nom" name="nom" required>
+                </div>
+                <div class="form-group">
+                    <label for="prenom">Prénom</label>
+                    <input type="text" class="form-control" id="prenom" name="prenom" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" class="form-control" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="adresse">Adresse</label>
+                    <input type="text" class="form-control" id="adresse" name="adresse" required>
+                </div>
+                <div class="form-group">
+                    <label for="num_telephone">Numéro de téléphone</label>
+                    <input type="text" class="form-control" id="num_telephone" name="num_telephone" required>
+                </div>
+                <div class="form-group">
+                    <label for="mot_passe">Mot de passe</label>
+                    <input type="password" class="form-control" id="mot_passe" name="mot_passe" required>
+                </div>
+                <div class="form-group">
+                    <label for="role">Rôle</label>
+                    <select class="form-control" id="role" name="role" required>
+                        <option value="">Sélectionnez un rôle</option>
+                        <option value="client">Client</option>
+                        <option value="pro">Professionnel</option>
+                    </select>
+                </div>
+                <p>Si vous être un Professionnel merci de remplir le champs ci dessous</p>
+                <div class="form-group">
+                    <label for="RIB">RIB</label>
+                    <input type="text" class="form-control" id="RIB" name="RIB">
+                </div>
+                <button type="submit" class="btn btn-success">Créer un compte</button>
+            </form>
+            {% if message %}
+                <p >{{ message }}</p>
+            {% endif %}
+        </article>
+    </section>
+</main>
+
+{% endblock %} 

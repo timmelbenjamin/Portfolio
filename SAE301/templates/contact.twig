@@ -1,0 +1,25 @@
+{% extends 'accueil.twig' %}
+{% block main %} 
+    <main class="main_formulaire">
+        <h1>Contactez-nous</h1>
+        {% if message %}
+            <p class="message">{{ message }}</p>
+        {% endif %}
+        <form action="contact.php" method="POST">
+            <div class="form-group">
+                <label for="nom">Nom :</label>
+                <input type="text" id="nom" name="nom" required>
+            </div>
+            <div class="form-group">
+                <label for="email">E-mail :</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="message">Message :</label>
+                <textarea id="message" name="message" rows="5" required></textarea>
+            </div>
+            <button type="submit">Envoyer</button>
+        </form>
+    </main>
+    
+{% endblock %} 
